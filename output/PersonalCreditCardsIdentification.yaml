@@ -1,0 +1,6 @@
+properties:
+  creditCard:
+    $ref: ./PersonalCreditCardsIdentificationCreditCard.yaml
+  product:
+    $ref: ./PersonalCreditCardsIdentificationProduct.yaml
+type: object

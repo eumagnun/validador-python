@@ -1,0 +1,30 @@
+description: Lista distribuição preços tarifas de serviços
+properties:
+  currency:
+    description: Moeda referente ao valor da Tarifa, segundo modelo ISO-4217. p.ex. 'BRL'
+    enum:
+    - moeda (ISO-4217)
+    maxLength: 3
+    type: string
+  customers:
+    $ref: ./BusinessInvoiceFinancingsFeesServicesPricesCustomers.yaml
+  interval:
+    description: 'Segundo Normativa nº 32, BCB, de 2020: Distribuição de frequência relativa dos valores de tarifas cobradas dos clientes, de que trata o § 2º do art. 3º da Circular nº 4.015, de 2020, deve dar-se com base em quatro faixas de igual tamanho, com explicitação dos valores sobre a mediana em cada uma dessas faixas. Informando: 1ª faixa, 2ª faixa, 3ª faixa e 4ª faixa'
+    enum:
+    - 1_FAIXA
+    - 2_FAIXA
+    - 3_FAIXA
+    - 4_FAIXA
+    type: string
+  value:
+    description: 'Valor da mediana de cada faixa relativa ao serviço ofertado, informado no período, conforme Res nº 32 BCB, 2020. p.ex. ''45.00''
+
+      (representa um valor monetário. p.ex: 1547368.92. Este valor, considerando que a moeda seja BRL, significa R$ 1.547.368,92. O único separador presente deve ser o ''.'' (ponto) para indicar a casa decimal. Não deve haver separador de milhar)'
+    maxLength: 12
+    pattern: ^((\d{1,9}\.\d{2}){1}|NA)$
+    type: string
+required:
+- interval
+- value
+- currency
+type: object

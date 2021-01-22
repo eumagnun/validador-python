@@ -1,0 +1,16 @@
+properties:
+  fees:
+    $ref: ./BusinessUnarrangedAccountOverdraftFees.yaml
+  interestRates:
+    description: Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequência das taxas de juros remuneratórios da Modalidade de crédito
+    items:
+      $ref: ./BusinessUnarrangedAccountOverdraftInterestRates.yaml
+    minItems: 1
+    type: array
+  termsConditions:
+    description: Campo aberto para informar as condições contratuais relativas à Modalidade de Adiantamento a depositante para pessoa natural. Pode ser informada a URL referente ao endereço onde constam as condições informadas. Endereço eletrônico de acesso ao canal.
+    maxLength: 2000
+    type: string
+required:
+- termsConditions
+type: object

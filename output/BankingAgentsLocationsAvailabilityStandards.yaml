@@ -1,0 +1,28 @@
+description: Relação da disponbilidade de atendimento
+properties:
+  closingTime:
+    description: 'Horário padrão de encerramento de atendimento pelo Correspondente Bancário.
+
+      (Uma string que representa a hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format). p.ex. ''16:00:57Z'')'
+    maxLength: 13
+    pattern: (?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z
+    type: string
+  openingTime:
+    description: 'Horário padrão de início de atendimento pelo Correspondente Bancário.
+
+      (Uma string que representa a hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format). p.ex. ''10:00:57Z'')'
+    maxLength: 13
+    pattern: (?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z
+    type: string
+  weekday:
+    description: Em formato texto, seguindo o domínio apresentado, devem ser colocados os dias da semana
+    enum:
+    - DOMINGO
+    - SEGUNDA_FEIRA
+    - TERCA_FEIRA
+    - QUARTA_FEIRA
+    - QUINTA_FEIRA
+    - SEXTA_FEIRA
+    - SABADO
+    type: string
+type: object

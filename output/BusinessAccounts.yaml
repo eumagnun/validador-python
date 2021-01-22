@@ -1,0 +1,57 @@
+properties:
+  additionalInfo:
+    description: Texto livre para complementar informação relativa ao Canal disponível, quando no campo 'openingClosingChannels' estiver preenchida a opção 'OUTROS'
+    maxLength: 100
+    pattern: \w*\W*
+    type: string
+  fees:
+    $ref: ./BusinessAccountsFees.yaml
+  incomeRate:
+    $ref: ./BusinessAccountsIncomeRate.yaml
+  'openingClosingChannels ':
+    description: Lista dos Canais disponíveis para abertura e encerramento de contas. (Vide Enum)
+    enum:
+    - DEPENDENCIAS_PROPRIAS
+    - CORRESPONDENTES_BANCARIOS
+    - INTERNET_BANKING
+    - MOBILE_BANKING
+    - CENTRAL_TELEFONICA
+    - CHAT
+    - OUTROS
+    type: string
+  serviceBundles:
+    description: Lista dos serviços que compõe o pacote de serviços
+    items:
+      $ref: ./BusinessAccountsServiceBundles.yaml
+    minItems: 1
+    type: array
+  termsConditions:
+    $ref: ./BusinessAccountsTermsConditions.yaml
+  'transactionMethods  ':
+    description: Lista de formas de movimentação possíveis para a conta. (Vide Enum)
+    enum:
+    - MOVIMENTACAO_ELETRONICA
+    - MOVIMENTACAO_CHEQUE
+    - MOVIMENTACAO_CARTAO
+    - MOVIMENTACAO_PRESENCIAL
+    type: string
+  type:
+    description: 'Tipos de contas ofertadas para pessoa jurídica, p.ex. ''CONTA_DEPOSITO_A_VISTA''.
+
+      Conta de depósito à vista ou Conta corrente - é o tipo mais comum. Nela, o dinheiro fica à sua disposição para ser sacado a qualquer momento. Essa conta não gera rendimentos para o depositante
+
+      Conta poupança - foi criada para estimular as pessoas a pouparem. O dinheiro que ficar na conta por trinta dias passa a gerar rendimentos, com isenção de imposto de renda para quem declara. Ou seja, o dinheiro “cresce” (rende) enquanto ficar guardado na conta. Cada depósito terá rendimentos de mês em mês, sempre no dia do mês em que o dinheiro tiver sido depositado
+
+      Conta de pagamento pré-paga: segundo CIRCULAR Nº 3.680, BCB de  2013, é a ''destinada à execução de transações de pagamento em moeda eletrônica realizadas com base em fundos denominados em reais previamente aportados'''
+    enum:
+    - CONTA_DEPOSITO_A_VISTA
+    - CONTA_POUPANCA
+    - CONTA_PAGAMENTO_PRE_PAGA
+    maxItems: 3
+    minItems: 1
+    type: string
+required:
+- type
+- 'openingClosingChannels '
+- 'transactionMethods  '
+type: object

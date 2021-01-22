@@ -1,0 +1,11 @@
+properties:
+  rate:
+    description: 'Percentual que corresponde a mediana (taxa efetiva) aplicada para pagamento parcelado do saldo devedor quando não realizado pagamento integral da fatura, no período informado. p.ex. ''0,2580%''.
+
+      (A apuração deve pode ser feita com até 4 casas decimais. A representação de porcentagem p.ex: do 0.1500 representa 15%. Desta forma, o valor 1 representa 100%)'
+    maxLength: 6
+    pattern: (^[0-9](\.[0-9]{4})$|^NA$)
+    type: string
+required:
+- rate
+type: object

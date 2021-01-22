@@ -1,0 +1,17 @@
+description: Lista de outras operações de crédito
+properties:
+  additionalInfo:
+    description: Campo Texto para descrever outras operações de crédito marcadas como 'OUTROS'
+    maxLength: 50
+    pattern: \w*\W*
+    type: string
+  code:
+    description: Lista de outras operações de crédito. p.ex. 'SAQUE_A_CREDITO'
+    enum:
+    - SAQUE_A_CREDITO
+    - PAGAMENTOS_CONTAS
+    - OUTROS
+    type: string
+required:
+- code
+type: object

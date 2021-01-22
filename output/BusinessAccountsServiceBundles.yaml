@@ -1,0 +1,27 @@
+description: Lista dos serviços que compõe o pacote de serviços
+properties:
+  maximum:
+    $ref: ./BusinessAccountsServiceBundlesMaximum.yaml
+  minimum:
+    $ref: ./BusinessAccountsServiceBundlesMinimum.yaml
+  name:
+    description: Nome do Pacote de Serviços disponibilizado pela instituição
+    maxLength: 250
+    pattern: \w*\W*
+    type: string
+  prices:
+    description: Lista distribuição preços tarifas de serviços
+    items:
+      $ref: ./BusinessAccountsServiceBundlesPrices.yaml
+    maxItems: 4
+    minItems: 4
+    type: array
+  services:
+    description: Lista dos serviços que compõem o Pacote de Serviços
+    items:
+      $ref: ./BusinessAccountsServiceBundlesServices.yaml
+    minItems: 1
+    type: array
+required:
+- name
+type: object

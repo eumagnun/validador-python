@@ -1,0 +1,7 @@
+properties:
+  additionalInfo:
+    description: Texto livre para complementar informação relativa ao Serviço disponível, quando for selecionada a opção 'OUTROS_PRODUTOS_SERVICOS'
+    maxLength: 2000
+    pattern: \w*\W*
+    type: string
+type: object

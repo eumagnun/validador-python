@@ -1,0 +1,21 @@
+properties:
+  instalmentRates:
+    description: Lista da representação que traz o conjunto de informações necessárias para demonstrar a distribuição de frequência das taxas de juros remuneratórios para parcelamento do saldo devedor
+    items:
+      $ref: ./PersonalCreditCardsInterestInstalmentRates.yaml
+    minItems: 1
+    type: array
+  otherCredits:
+    description: Lista de outras operações de crédito
+    items:
+      $ref: ./PersonalCreditCardsInterestOtherCredits.yaml
+    maxItems: 3
+    minItems: 1
+    type: array
+  rates:
+    description: Lista da representação que traz o conjunto de informações necessárias para demonstrar a distribuição de frequência das taxas de juros remuneratórios para crédito rotativo
+    items:
+      $ref: ./PersonalCreditCardsInterestRates.yaml
+    minItems: 1
+    type: array
+type: object

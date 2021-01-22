@@ -1,0 +1,32 @@
+description: Lista das Tarifas cobradas sobre outros Serviços, que não prioritários
+properties:
+  chargingTriggerInfo:
+    description: Fatos geradores de cobrança que incidem sobre  serviços para pessoa natural. (Campo Livre)
+    maxLength: 2000
+    pattern: \w*\W*
+    type: string
+  code:
+    description: ' Siglas de identificação do Serviço (Campo Livre)'
+    maxLength: 100
+    type: string
+  maximum:
+    $ref: ./PersonalAccountsFeesOtherServicesMaximum.yaml
+  minimum:
+    $ref: ./PersonalAccountsFeesOtherServicesMinimum.yaml
+  name:
+    description: Nome do Serviço que incide sobre tipo de conta selecionado para pessoa natural(Campo Livre)
+    maxLength: 250
+    pattern: \w*\W*
+    type: string
+  prices:
+    description: Lista distribuição preços tarifas de serviços
+    items:
+      $ref: ./PersonalAccountsFeesOtherServicesPrices.yaml
+    maxItems: 4
+    minItems: 4
+    type: array
+required:
+- name
+- code
+- chargingTriggerInfo
+type: object

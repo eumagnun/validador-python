@@ -1,0 +1,32 @@
+properties:
+  additionalInfo:
+    description: Campo de texto livre para descrever informações complementateres sobre canais telefônicos. De preenchimento obrigatório quando o tipo de canal de atendimento telefônico selecionado for "OUTROS"
+    maxLength: 300
+    pattern: \w*\W*
+    type: string
+  phones:
+    description: Lista de telefones do Canal de Atendimento
+    items:
+      $ref: ./PhoneChannelsIdentificationPhones.yaml
+    minItems: 1
+    type: array
+  type:
+    description: 'Tipo de canal telefônico de atendimento:
+
+      CENTRAL_TELEFONICA
+
+      SAC
+
+      OUVIDORIA
+
+      OUTROS'
+    enum:
+    - CENTRAL_TELEFONICA
+    - SAC
+    - OUVIDORIA
+    - OUTROS
+    maxLength: 30
+    type: string
+required:
+- type
+type: object

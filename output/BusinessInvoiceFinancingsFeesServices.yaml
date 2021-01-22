@@ -1,0 +1,33 @@
+description: Lista das Tarifas cobradas sobre Serviços
+properties:
+  chargingTriggerInfo:
+    description: Fatos geradores de cobrança que incidem sobre as Modalidades de Financiamentos informada, para pessoa natural.(Campo Livre)
+    maxLength: 2000
+    pattern: \w*\W*
+    type: string
+  code:
+    description: Sigla de identificação do serviço relacionado à Modalidade de Financiamentos informada, para pessoa natural.(Campo Livre).
+    maxLength: 100
+    pattern: \w*\W*
+    type: string
+  maximum:
+    $ref: ./BusinessInvoiceFinancingsFeesServicesMaximum.yaml
+  minimum:
+    $ref: ./BusinessInvoiceFinancingsFeesServicesMinimum.yaml
+  name:
+    description: Nomes das Tarifas cobradas sobre Serviços ofertados à Modalidade de Financiamentos, para pessoa Natural. (Campo Livre). p.ex.  'Avaliação de Garantia Hipotecária, Avaliação de Propriedade Rural e Parecer Técnico para Prorrogação de Operações Rurais'
+    maxLength: 250
+    pattern: \w*\W*
+    type: string
+  prices:
+    description: Lista distribuição preços tarifas de serviços
+    items:
+      $ref: ./BusinessInvoiceFinancingsFeesServicesPrices.yaml
+    maxItems: 4
+    minItems: 4
+    type: array
+required:
+- name
+- code
+- chargingTriggerInfo
+type: object

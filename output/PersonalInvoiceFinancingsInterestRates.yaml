@@ -1,0 +1,53 @@
+description: Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequência das taxas de juros remuneratórios da Modalidade de crédito
+properties:
+  applications:
+    description: Lista  das faixas de cobrança da taxa efetiva de remuneração
+    items:
+      $ref: ./PersonalInvoiceFinancingsInterestRatesApplications.yaml
+    maxItems: 4
+    minItems: 4
+    type: array
+  maximumRate:
+    description: "Percentual máximo cobrado (taxa efetiva) no mês de referência, para o crédito contratado \nA apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros\n(representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)"
+    maxLength: 6
+    pattern: (^[0-9](\.[0-9]{4})$|^NA$)
+    type: string
+  minimumRate:
+    description: "Percentual mínimo cobrado (taxa efetiva) no mês de referência, para o crédito contratado \nA apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros\n(representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)"
+    maxLength: 6
+    pattern: (^[0-9](\.[0-9]{4})$|^NA$)
+    type: string
+  rate:
+    description: "Percentual do índice ou da taxa referencial que incide sobre a composição das taxas de juros remuneratórios. \n(representa uma porcentagem Ex: 0.15 (O valor ao lado representa 15%. O valor '1 'representa 100%)\nA apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros\n(representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)"
+    maxLength: 4
+    pattern: ^((\d{1,9}\.\d{2}){1}|NA)$
+    type: string
+  referentialRateIndexer:
+    description: 'Tipos de taxas referenciais ou indexadores, conforme Anexo 5: Taxa referencial ou Indexador (Indx), do Documento 3040'
+    enum:
+    - SEM_INDEXADOR_TAXA
+    - PRE_FIXADO
+    - POS_FIXADO_TR_TBF
+    - POS_FIXADO_TJLP
+    - POS_FIXADO_LIBOR
+    - POS_FIXADO_TLP
+    - OUTRAS_TAXAS_POS_FIXADAS
+    - FLUTUANTES_CDI
+    - FLUTUANTES_SELIC
+    - OUTRAS_TAXAS_FLUTUANTES
+    - INDICES_PRECOS_IGPM
+    - INDICES_PRECOS_IPCA
+    - INDICES_PRECOS_IPCC
+    - OUTROS_INDICES_PRECO
+    - CREDITO_RURAL_TCR_PRE
+    - CREDITO_RURAL_TCR_POS
+    - CREDITO_RURAL_TRFC_PRE
+    - CREDITO_RURAL_TRFC_POS
+    - OUTROS_INDEXADORES
+    type: string
+required:
+- referentialRateIndexer
+- rate
+- minimumRate
+- maximumRate
+type: object

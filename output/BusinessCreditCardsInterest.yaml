@@ -1,0 +1,21 @@
+properties:
+  instalmentRates:
+    description: Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequência das taxas de juros remuneratórios para parcelamento do saldo devedor
+    items:
+      $ref: ./BusinessCreditCardsInterestInstalmentRates.yaml
+    minItems: 1
+    type: array
+  otherCredits:
+    description: Lista de outras operações de crédito
+    items:
+      $ref: ./BusinessCreditCardsInterestOtherCredits.yaml
+    maxItems: 3
+    minItems: 1
+    type: array
+  rates:
+    description: Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequência das taxas de juros remuneratórios do Crédito Rotativo
+    items:
+      $ref: ./BusinessCreditCardsInterestRates.yaml
+    minItems: 1
+    type: array
+type: object

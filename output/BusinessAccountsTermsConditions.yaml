@@ -1,0 +1,18 @@
+description: Objeto que reúne informações relativas a Termos e Condições para as modalidades tratadas
+properties:
+  closingProcessInfo:
+    description: Procedimentos de encerramento para o tipo de conta tratado. Possibilidade de inscrição da URL. Endereço eletrônico de acesso ao canal. p.ex. 'https://example.com/mobile-banking'
+    maxLength: 2000
+    pattern: \w*\W*
+    type: string
+  elegibilityCriteriaInfo:
+    description: Critérios de qualificação do cliente com a finalidade de definir sua elegibilidade para a aquisição do tipo de conta. Campo Aberto
+    maxLength: 2000
+    pattern: \w*\W*
+    type: string
+  minimumBalance:
+    $ref: ./BusinessAccountsTermsConditionsMinimumBalance.yaml
+required:
+- elegibilityCriteriaInfo
+- closingProcessInfo
+type: object

@@ -1,0 +1,11 @@
+properties:
+  identification:
+    $ref: ./PhoneChannelsIdentification.yaml
+  services:
+    description: Traz a relação de serviços disponbilizados pelo Canal de Atendimento
+    items:
+      $ref: ./PhoneChannelsServices.yaml
+    maxItems: 20
+    minItems: 1
+    type: array
+type: object

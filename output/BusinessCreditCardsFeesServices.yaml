@@ -1,0 +1,49 @@
+description: Lista das Tarifas cobradas sobre Serviço relacionadas a Modalidade de Pagamento Pós-Pagas
+properties:
+  chargingTriggerInfo:
+    description: Fatos geradores de cobrança que incidem sobre as Modalidades de  Contas de Pagamento Pós-Pagas informada, para pessoa jurídica. Conforme serviços prioritários previstos na resolução 3919.
+    maxLength: 2000
+    pattern: \w*\W*
+    type: string
+  code:
+    description: Sigla de identificação do Serviço relacionado à Modalidade de Contas de Pagamento Pós-Pagas para pessoa jurídica informada. (Vide Enum)
+    enum:
+    - ANUIDADE_NACIONAL
+    - ANUIDADE_INTERNACIONAL
+    - ANUIDADE_DIFERENCIADA
+    - SAQUE_CARTAO_BRASIL
+    - SAQUE_CARTAO_EXTERIOR
+    - AVALIACAO_EMERGENCIAL_CREDITO
+    - EMISSAO_SEGUNDA_VIA
+    - TARIFA_PAGAMENTO_CONTAS
+    - SMS
+    type: string
+  maximum:
+    $ref: ./BusinessCreditCardsFeesServicesMaximum.yaml
+  minimum:
+    $ref: ./BusinessCreditCardsFeesServicesMinimum.yaml
+  name:
+    description: Lista de denominação de Serviços relacionados à Modalidade de Contas de Pagamento Pós-Pagas, para pessoa jurídica (Vide Enum)
+    enum:
+    - ANUIDADE_CARTAO_BASICO_NACIONAL
+    - ANUIDADE_CARTAO_BASICO_INTERNACIONAL
+    - ANUIDADE_DIFERENCIADA
+    - UTILIZACAO_CANAIS_ATENDIMENTO_RETIRADA_ESPECIE_BRASIL
+    - UTILIZACAO_CANAIS_ATENDIMENTO_RETIRADA_ESPECIE_EXTERIOR
+    - AVALIACAO_EMERGENCIAL_CREDITO
+    - FORNECIMENTO_SEGUNDA_VIA_FUNCAO_CREDITO
+    - PAGAMENTO_CONTAS_UTILIZANDO_FUNCAO_CREDITO
+    - SMS
+    type: string
+  prices:
+    description: Lista distribuição preços tarifas de serviços
+    items:
+      $ref: ./BusinessCreditCardsFeesServicesPrices.yaml
+    maxItems: 4
+    minItems: 4
+    type: array
+required:
+- name
+- code
+- chargingTriggerInfo
+type: object

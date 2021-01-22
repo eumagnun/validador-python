@@ -1,0 +1,42 @@
+description: Lista das Tarifas cobradas sobre Serviços
+properties:
+  chargingTriggerInfo:
+    description: Fatos geradores de cobrança que incidem sobre as Modalidades de Financiamentos informada, para pessoa natural.(Campo Livre)
+    maxLength: 2000
+    pattern: \w*\W*
+    type: string
+  code:
+    description: Sigla de identificação do serviço relacionado à Modalidade de Financiamentos informada, para pessoa natural.(Campo Livre).
+    maxLength: 100
+    pattern: \w*\W*
+    type: string
+  currency:
+    description: Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217. p.ex.'BRL'
+    enum:
+    - moeda (ISO-4217)
+    maxLength: 3
+    type: string
+  name:
+    description: Nomes das Tarifas cobradas sobre Serviços ofertados à Modalidade de Financiamentos, para pessoa Natural. (Campo Livre). p.ex.  'Avaliação de Garantia Hipotecária, Avaliação de Propriedade Rural e Parecer Técnico para Prorrogação de Operações Rurais'
+    maxLength: 250
+    pattern: \w*\W*
+    type: string
+  prices:
+    description: Lista distribuição preços tarifas de serviços
+    items:
+      $ref: ./PersonalInvoiceFinancingsFeesServicesPrices.yaml
+    maxItems: 4
+    minItems: 4
+    type: array
+  value:
+    description: Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência
+    maxLength: 12
+    pattern: ^((\d{1,9}\.\d{2}){1}|NA)$
+    type: string
+required:
+- name
+- code
+- chargingTriggerInfo
+- value
+- currency
+type: object

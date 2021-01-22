@@ -1,0 +1,2528 @@
+Applications:
+- names:
+  - BusinessCreditCardsInterestRatesApplications
+  - BusinessCreditCardsInterestInstalmentRatesApplications
+  - BusinessFinancingsInterestRatesApplications
+  - BusinessInvoiceFinancingsInterestRatesApplications
+  - BusinessLoansInterestRatesApplications
+  - BusinessUnarrangedAccountOverdraftInterestRatesApplications
+  - PersonalCreditCardsInterestInstalmentRatesApplications
+  - PersonalFinancingsInterestRatesApplications
+  - PersonalInvoiceFinancingsInterestRatesApplications
+  - PersonalLoansInterestRatesApplications
+  schema:
+    description: 'Lista  das faixas de cobrança da taxa efetiva aplicada pela contratação de crédito
+
+      rotativo'
+    properties:
+      customers:
+        $ref: ./BusinessCreditCardsInterestRatesApplicationsCustomers.yaml
+      indexer:
+        $ref: ./BusinessCreditCardsInterestRatesApplicationsIndexer.yaml
+      interval:
+        description: "Faixas para cobrança da taxa efetiva aplicada pela contratação do do crédito rotativo, no intervalo informado: 1ª faixa, 2ª faixa, 3ª faixa e 4ª faixa. Segundo Normativa nº32 de 2020: 'Distribuição de frequência relativa dos valores de tarifas e taxas de juros cobrados dos clientes, de que trata o § 2º do art. 3º da Circular nº 4.015, de 2020, deve dar-se com base em quatro faixas de igual tamanho, com explicitação dos valores sobre a mediana e o percentual de clientes em cada uma dessas faixas. \n"
+        enum:
+        - 1_FAIXA
+        - 2_FAIXA
+        - 3_FAIXA
+        - 4_FAIXA
+        type: string
+    required:
+    - interval
+    type: object
+- names:
+  - PersonalCreditCardsInterestRatesApplications
+  schema:
+    description: Lista distribuição percentuais relativos à taxa de juros remuneratórios
+    properties:
+      customers:
+        $ref: ./PersonalCreditCardsInterestRatesApplicationsCustomers.yaml
+      interval:
+        description: "Faixas para cobrança da taxa efetiva aplicada pela contratação do crédito rotativo, no intervalo informado: 1ª faixa, 2ª faixa, 3ª faixa e 4ª faixa. Segundo Normativa nº32 de 2020: 'Distribuição de frequência relativa dos valores de tarifas e taxas de juros cobrados dos clientes, de que trata o § 2º do art. 3º da Circular nº 4.015, de 2020, deve dar-se com base em quatro faixas de igual tamanho, com explicitação dos valores sobre a mediana e o percentual de clientes em cada uma dessas faixas. \n"
+        enum:
+        - 1_FAIXA
+        - 2_FAIXA
+        - 3_FAIXA
+        - 4_FAIXA
+        type: string
+      rate:
+        description: 'Percentual que corresponde a mediana (taxa efetiva) cobrada do cliente pela utilização do crédito rotativo, no intervalo informado. p.ex. ''0,8700%''
+
+          A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros
+
+          (representação de porcentagem p.ex: 0.15. Este valor representa 15%. O valor 1 representa 100%)'
+        maxLength: 6
+        pattern: (^[0-9](\.[0-9]{4})$|^NA$)
+        type: string
+    required:
+    - interval
+    - rate
+    type: object
+Availability:
+- names:
+  - SharedAutomatedTellerMachinesAvailability
+  - BankingAgentsLocationsAvailability
+  - BranchesAvailability
+  schema:
+    properties:
+      exception:
+        description: Em campo texto devem ser registradas todas as Exceções para o não atendimento. p.ex. 'Exceto feriados municipais, nacionais e estaduais'
+        maxLength: 2000
+        pattern: \w*\W*
+        type: string
+      isPublicAccessAllowed:
+        description: Indica se o Terminal de Autoatendimento Compartilhado disponibiliza acesso restrito ou  irrestrito, atendendo ao público em geral. p.ex. 'false' (restrito)
+        enum:
+        - 'true'
+        - 'false'
+        type: string
+      standards:
+        description: Relação da disponbilidade de atendimento padrão por dias da semana
+        items:
+          $ref: ./SharedAutomatedTellerMachinesAvailabilityStandards.yaml
+        maxItems: 7
+        minItems: 1
+        type: array
+    type: object
+BankingAgents:
+- names:
+  - BankingAgents
+  schema:
+    properties:
+      identification:
+        $ref: ./BankingAgentsIdentification.yaml
+      locations:
+        description: Relação de informações referentes as localizações de um Correspondente bancário
+        items:
+          $ref: ./BankingAgentsLocations.yaml
+        minItems: 1
+        type: array
+      services:
+        description: Traz a relação de serviços disponbilizados pelo Correspondente Bancário
+        items:
+          $ref: ./BankingAgentsServices.yaml
+        maxItems: 20
+        minItems: 1
+        type: array
+    type: object
+Branches:
+- names:
+  - Branches
+  schema:
+    properties:
+      availability:
+        $ref: ./BranchesAvailability.yaml
+      identification:
+        $ref: ./BranchesIdentification.yaml
+      phones:
+        description: Lista de telefones da Dependência
+        items:
+          $ref: ./BranchesPhones.yaml
+        minItems: 1
+        type: array
+      postalAddress:
+        $ref: ./BranchesPostalAddress.yaml
+      service:
+        $ref: ./BranchesService.yaml
+      services:
+        description: Traz a relação de serviços disponbilizados pelo Canal de Atendimento
+        items:
+          $ref: ./BranchesServices.yaml
+        maxItems: 20
+        minItems: 1
+        type: array
+    type: object
+BusinessAccounts:
+- names:
+  - BusinessAccounts
+  schema:
+    properties:
+      additionalInfo:
+        description: Texto livre para complementar informação relativa ao Canal disponível, quando no campo 'openingClosingChannels' estiver preenchida a opção 'OUTROS'
+        maxLength: 100
+        pattern: \w*\W*
+        type: string
+      fees:
+        $ref: ./BusinessAccountsFees.yaml
+      incomeRate:
+        $ref: ./BusinessAccountsIncomeRate.yaml
+      'openingClosingChannels ':
+        description: Lista dos Canais disponíveis para abertura e encerramento de contas. (Vide Enum)
+        enum:
+        - DEPENDENCIAS_PROPRIAS
+        - CORRESPONDENTES_BANCARIOS
+        - INTERNET_BANKING
+        - MOBILE_BANKING
+        - CENTRAL_TELEFONICA
+        - CHAT
+        - OUTROS
+        type: string
+      serviceBundles:
+        description: Lista dos serviços que compõe o pacote de serviços
+        items:
+          $ref: ./BusinessAccountsServiceBundles.yaml
+        minItems: 1
+        type: array
+      termsConditions:
+        $ref: ./BusinessAccountsTermsConditions.yaml
+      'transactionMethods  ':
+        description: Lista de formas de movimentação possíveis para a conta. (Vide Enum)
+        enum:
+        - MOVIMENTACAO_ELETRONICA
+        - MOVIMENTACAO_CHEQUE
+        - MOVIMENTACAO_CARTAO
+        - MOVIMENTACAO_PRESENCIAL
+        type: string
+      type:
+        description: 'Tipos de contas ofertadas para pessoa jurídica, p.ex. ''CONTA_DEPOSITO_A_VISTA''.
+
+          Conta de depósito à vista ou Conta corrente - é o tipo mais comum. Nela, o dinheiro fica à sua disposição para ser sacado a qualquer momento. Essa conta não gera rendimentos para o depositante
+
+          Conta poupança - foi criada para estimular as pessoas a pouparem. O dinheiro que ficar na conta por trinta dias passa a gerar rendimentos, com isenção de imposto de renda para quem declara. Ou seja, o dinheiro “cresce” (rende) enquanto ficar guardado na conta. Cada depósito terá rendimentos de mês em mês, sempre no dia do mês em que o dinheiro tiver sido depositado
+
+          Conta de pagamento pré-paga: segundo CIRCULAR Nº 3.680, BCB de  2013, é a ''destinada à execução de transações de pagamento em moeda eletrônica realizadas com base em fundos denominados em reais previamente aportados'''
+        enum:
+        - CONTA_DEPOSITO_A_VISTA
+        - CONTA_POUPANCA
+        - CONTA_PAGAMENTO_PRE_PAGA
+        maxItems: 3
+        minItems: 1
+        type: string
+    required:
+    - type
+    - 'openingClosingChannels '
+    - 'transactionMethods  '
+    type: object
+BusinessCreditCards:
+- names:
+  - BusinessCreditCards
+  schema:
+    properties:
+      fees:
+        $ref: ./BusinessCreditCardsFees.yaml
+      identification:
+        $ref: ./BusinessCreditCardsIdentification.yaml
+      interest:
+        $ref: ./BusinessCreditCardsInterest.yaml
+      name:
+        description: 'Denominação/Identificação do nome da conta de pagamento pós-paga (cartão).Conforme CIRCULAR Nº 3.680,BCB, 2013: ''conta de pagamento pós-paga: destinada à execução de transações de pagamento que independem do aporte prévio de recursos'' p.ex. ''Cartão Universitário Bem-Vindo'''
+        maxLength: 50
+        pattern: \w*\W*
+        type: string
+      rewardsProgram:
+        $ref: ./BusinessCreditCardsRewardsProgram.yaml
+      termsConditions:
+        $ref: ./BusinessCreditCardsTermsConditions.yaml
+    required:
+    - name
+    type: object
+BusinessFinancings:
+- names:
+  - BusinessFinancings
+  schema:
+    properties:
+      fees:
+        $ref: ./BusinessFinancingsFees.yaml
+      interestRates:
+        description: Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequências das taxas de juros remuneratórios da Modalidade de crédito
+        items:
+          $ref: ./BusinessFinancingsInterestRates.yaml
+        minItems: 1
+        type: array
+      requiredWarranties:
+        description: "Listas das garantias exigidas, segundo documento 3040 do Bacen:  \n-cessão de direitos creditórios: o cedente transfere ao credor/cessionário a titularidade de direitos creditórios, até a liquidação da dívida. O credor/cessionário passa a recebê-los diretamente dos devedores e credita o produto da operação para o cedente na operação que originou a cessão, até a sua liquidação \n-caução: garantia instituída sobre créditos do garantidor \n-penhor: direito real que consiste na tradição de uma coisa móvel ou mobilizável, suscetível de alienação, realizada pelo devedor ou por terceiro ao credor, a fim de garantir o pagamento do débito \n-alienação fiduciária: transferência ao credor, ou fiduciário, da propriedade do bem \n-hipoteca: direito real de garantia que afeta um bem imóvel para o cumprimento da obrigação \n-operações garantidas pelo governo: nas instâncias federal, estadual ou municipal\n-outras garantias não fidejussórias: as garantias reais não descritas como: cessão de direitos creditórios, caução, penhor, alienação fiduciária, hipoteca ou operação garantida pelo governo \n-seguros e assemelhados: os seguros (e assemelhados) contratados para garantir o pagamento da operação em circunstâncias adversas\n-garantia fidejussória: baseada na fidelidade do garantidor em cumprir as obrigações, caso o devedor não o faça\n-bens arrendados: bem objeto do arrendamento financeiro\n-garantias internacionais: declarar se a garantia é mitigadora ou não, observados os critérios definidos pela Circular 3.644, de 4 de março de 2013 \n-operações garantidas por outras entidade: declarar as garantias prestadas pelas entidades descritas no item 3. Informações de Garantias (i) do documento 3040 - Bacen \n-acordos de compensação: operações que sejam abrangidas por acordos para a compensação e liquidação de obrigações no âmbito do SFN, nos termos da Resolução 3.263, de 24 de fevereiro de 2005\n-não aplicável"
+        enum:
+        - CESSAO_DIREITOS_CREDITORIOS
+        - CAUCAO
+        - PENHOR
+        - ALIENACAO_FIDUCIARIA
+        - HIPOTECA
+        - OPERACOES_GARANTIDAS_PELO_GOVERNO
+        - OUTRAS_GARANTIAS_NAO_FIDEJUSSORIAS
+        - SEGUROS_ASSEMELHADOS
+        - GARANTIA_FIDEJUSSORIA
+        - BENS_ARRENDADOS
+        - GARANTIAS_INTERNACIONAIS
+        - OPERACOES_GARANTIDAS_OUTRAS_ENTIDADES
+        - ACORDOS_COMPENSACAO
+        - NAO_APLICAVEL
+        type: string
+      termsConditions:
+        description: Campo aberto para informar as condições contratuais relativas à Modalidade de Financiamentos para pessoa jurídica informada. Pode ser informada a URL referente ao endereço onde constam as condições informadas. Endereço eletrônico de acesso ao canal.
+        maxLength: 2000
+        pattern: \w*\W*
+        type: string
+      type:
+        description: "Modalidades de financiamentos ofertadas para pessoas jurídicas, conforme Circular 4015-Bacen. Segundo cartilha do Bacen: Financiamento é um contrato entre o cliente e uma instituição financeira, mas com, destinação específica como para a aquisição de veículo ou de bem imóvel, que funcionam como garantia para o crédito concedido. p. ex. financiamento imobiliário e de veículos. São eles segundo descrições obtidas junto ao Documento 3040 do Bacen:\nfinanciamento-aquisição de bens – veículos automotores - Financiamentos a pessoas jurídicas vinculadas à aquisição de bens veículos automotores, que tenham o bem financiado alienado fiduciariamente como garantia da operação\nfinanciamento-aquisição de bens – outros bens - destinados a financiar a aquisição de bens, serviços, máquinas e equipamentos, exceto veículos automotores\nfinanciamento-microcrédito - operação de crédito realizada para financiamento de atividades produtivas de pessoas naturais ou jurídicas, organizadas de forma individual ou coletiva, com renda ou receita bruta anual de até R$200.000,00 (duzentos mil reais) \nfinanciamento rural-custeio - financiamentos concedidos a produtores rurais para custeio, tanto agrícolas quanto pecuários (destina-se a cobrir os gastos normais dos ciclos produtivos, como aquisição de insumo);\nfinanciamento rural-investimento - financiamentos concedidos a produtores rurais para investimento, tanto agrícolas quanto pecuários (aplicações em bens ou serviços que serão utilizados por vários ciclos produtivos, como compra de máquinas e equipamentos, construção e reforma de benfeitorias); \nfinanciamento rural-comercialização - financiamentos concedidos a produtores rurais para comercialização, tanto agrícolas quanto pecuários (destina-se às despesas posteriores à produção, como armazenagem, ou conversão em espécie dos títulos de venda a prazo da produção);\nfinanciamento rural-industrialização - financiamentos concedidos a produtores rurais para industrialização, tanto agrícolas quanto pecuários (destina-se à industrialização de produtos agropecuários por produtores ou suas cooperativas);\nfinanciamento imobiliário-Sistema Financeiro da Habitação (SFH) - financiamento para aquisição ou construção de unidades habitacionais enquadradas no Sistema Financeiro de Habitação - SFH. O SFH foi criado pela Lei 4.380/64 e tem como característica a regulamentação das condições de financiamento imobiliário, por exemplo, taxa de juros, quota, prazos. O Governo Federal pode intervir em qualquer um dos aspectos do financiamento. Nesse sistema estão incluídas as operações contratadas com recursos do SBPE e do FGTS, inclusive o PMCMV (Programa Minha Casa, Minha Vida). As operações com recursos do FGTS observam, ainda, regulamentação própria. \nfinanciamento imobiliário-Sistema Financeiro da Habitação (SFI) - O SFI não possui regulamentação das condições de financiamento, sendo estas definidas pelo Agentes Financeiros"
+        enum:
+        - FINANCIAMENTO_AQUISICAO_BENS_VEICULOS_AUTOMOTORES
+        - FINANCIAMENTO_AQUISICAO_BENS_OUTROS_BENS
+        - FINANCIAMENTO-MICROCREDITO
+        - FINANCIAMENTO_RURAL_CUSTEIO
+        - FINANCIAMENTO_RURAL_INVESTIMENTO
+        - FINANCIAMENTO_RURAL_COMERCIALIZACAO
+        - FINANCIAMENTO_RURAL_INDUSTRIALIZACAO
+        - FINANCIAMENTO_IMOBILIARIO_SISTEMA_FINANCEIRO_HABITACAO-SFH
+        - FINANCIAMENTO_IMOBILIARIO_SISTEMA_FINANCEIRO_HABITACAO-SFI
+        type: string
+    required:
+    - type
+    - requiredWarranties
+    - termsConditions
+    type: object
+BusinessInvoiceFinancings:
+- names:
+  - BusinessInvoiceFinancings
+  schema:
+    properties:
+      fees:
+        $ref: ./BusinessInvoiceFinancingsFees.yaml
+      interestRates:
+        description: Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequência das taxas de juros remuneratórios da Modalidade de crédito
+        items:
+          $ref: ./BusinessInvoiceFinancingsInterestRates.yaml
+        minItems: 1
+        type: array
+      requiredWarranties:
+        description: "Relação de garantias exigidas, segundo documento 3040 do Bacen: \n-cessão de direitos creditórios: o cedente transfere ao credor/cessionário a titularidade de direitos creditórios, até a liquidação da dívida. O credor/cessionário passa a recebê-los diretamente dos devedores e credita o produto da operação para o cedente na operação que originou a cessão, até a sua liquidação \n-caução: garantia instituída sobre créditos do garantidor \n-penhor: direito real que consiste na tradição de uma coisa móvel ou mobilizável, suscetível de alienação, realizada pelo devedor ou por terceiro ao credor, a fim de garantir o pagamento do débito \n-alienação fiduciária: transferência ao credor, ou fiduciário, da propriedade do bem \n-hipoteca: direito real de garantia que afeta um bem imóvel para o cumprimento da obrigação \n-operações garantidas pelo governo: nas instâncias federal, estadual ou municipal\n-outras garantias não fidejussórias: as garantias reais não descritas como: cessão de direitos creditórios, caução, penhor, alienação fiduciária, hipoteca ou operação garantida pelo governo \n-seguros e assemelhados: os seguros (e assemelhados) contratados para garantir o pagamento da operação em circunstâncias adversas\n-garantia fidejussória: baseada na fidelidade do garantidor em cumprir as obrigações, caso o devedor não o faça\n-bens arrendados: bem objeto do arrendamento financeiro\n-garantias internacionais: declarar se a garantia é mitigadora ou não, observados os critérios definidos pela Circular 3.644, de 4 de março de 2013 \n-operações garantidas por outras entidade: declarar as garantias prestadas pelas entidades descritas no item 3. Informações de Garantias (i) do documento 3040 - Bacen \n-acordos de compensação: operações que sejam abrangidas por acordos para a compensação e liquidação de obrigações no âmbito do SFN, nos termos da Resolução 3.263, de 24 de fevereiro de 2005\n-não aplicável"
+        enum:
+        - CESSAO_DIREITOS_CREDITORIOS
+        - CAUCAO
+        - PENHOR
+        - ALIENACAO_FIDUCIARIA
+        - HIPOTECA
+        - OPERACOES_GARANTIDAS_PELO_GOVERNO
+        - OUTRAS_GARANTIAS_NAO_FIDEJUSSORIAS
+        - SEGUROS_ASSEMELHADOS
+        - GARANTIA_FIDEJUSSORIA
+        - BENS_ARRENDADOS
+        - GARANTIAS_INTERNACIONAIS
+        - OPERACOES_GARANTIDAS_OUTRAS_ENTIDADES
+        - ACORDOS_COMPENSACAO
+        - NAO_APLICAVEL
+        type: string
+      termsConditions:
+        description: Campo aberto para informar as condições contratuais relativas à Modalidade de Financiamentos para pessoa jurídica informada. Pode ser informada a URL referente ao endereço onde constam as condições informadas. Endereço eletrônico de acesso ao canal.
+        maxLength: 2000
+        pattern: \w*\W*
+        type: string
+      type:
+        description: 'Modalidades de Direitos Creditórios Descontados ofertados, conforme Circular 4015-Bacen. Direito creditório descontado é a antecipação de créditos relativos por ex. ao: desconto de duplicatas, desconto de cheques, antecipação de fatura de cartão de crédito
+
+          desconto de duplicatas: operações de crédito para adiantamento de recursos com base em fluxo de caixa futuro vinculado a duplicatas mercantis
+
+          desconto de cheques: operações de crédito para adiantamento de recursos com base em fluxo de caixa futuro vinculado a cheques custodiados
+
+          antecipação de fatura de cartão de crédito: operações de crédito para adiantamento de recursos  com base em fluxo de caixa futuro vinculado a direitos creditórios sob a forma de faturas de cartão de crédito
+
+          outros direitos creditórios descontados: operação  de crédito que permite antecipar o valor da venda a prazo dos produtos ou serviços mediante desconto de nota promissória
+
+          outros títulos descontados: demais títulos descontados, regulamentação própria'
+        enum:
+        - DESCONTO_DUPLICATAS
+        - DESCONTO_CHEQUES
+        - ANTECIPACAO_FATURA_CARTAO_CREDITO
+        - OUTROS_DIREITOS_CREDITORIOS_DESCONTADOS
+        - OUTROS_TITULOS_DESCONTADOS
+        type: string
+    required:
+    - type
+    - requiredWarranties
+    - termsConditions
+    type: object
+BusinessLoans:
+- names:
+  - BusinessLoans
+  schema:
+    properties:
+      fees:
+        $ref: ./BusinessLoansFees.yaml
+      interestRates:
+        description: Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequência das taxas de juros remuneratórios da Modalidade de crédito
+        items:
+          $ref: ./BusinessLoansInterestRates.yaml
+        minItems: 1
+        type: array
+      requiredWarranties:
+        description: "Lista das garantias exigidas, segundo documento 3040 do Bacen: \n-cessão de direitos creditórios: o cedente transfere ao credor/cessionário a titularidade de direitos creditórios, até a liquidação da dívida. O credor/cessionário passa a recebê-los diretamente dos devedores e credita o produto da operação para o cedente na operação que originou a cessão, até a sua liquidação \n-caução: garantia instituída sobre créditos do garantidor \n-penhor: direito real que consiste na tradição de uma coisa móvel ou mobilizável, suscetível de alienação, realizada pelo devedor ou por terceiro ao credor, a fim de garantir o pagamento do débito \n-alienação fiduciária: transferência ao credor, ou fiduciário, da propriedade do bem \n-hipoteca: direito real de garantia que afeta um bem imóvel para o cumprimento da obrigação, \n-operações garantidas pelo governo: nas instâncias federal, estadual ou municipal\n-outras garantias não fidejussórias: as garantias reais não descritas como: cessão de direitos creditórios, caução, penhor, alienação fiduciária, hipoteca ou operação garantida pelo governo \n-seguros e assemelhados: os seguros (e assemelhados) contratados para garantir o pagamento da operação em circunstâncias adversas\n-garantia fidejussória: baseada na fidelidade do garantidor em cumprir as obrigações, caso o devedor não o faça\n-bens arrendados: bem objeto do arrendamento financeiro\n-garantias internacionais: declarar se a garantia é mitigadora ou não, observados os critérios definidos pela Circular 3.644, de 4 de março de 2013 \n-operações garantidas por outras entidade: declarar as garantias prestadas pelas entidades descritas no item 3. Informações de Garantias (i) do documento 3040 - Bacen, \n-acordos de compensação: operações que sejam abrangidas por acordos para a compensação e liquidação de obrigações no âmbito do SFN, nos termos da Resolução 3.263, de 24 de fevereiro de 2005\n-não aplicável"
+        enum:
+        - CESSAO_DIREITOS_CREDITORIOS
+        - CAUCAO
+        - PENHOR
+        - ALIENACAO_FIDUCIARIA
+        - HIPOTECA
+        - OPERACOES_GARANTIDAS_PELO_GOVERNO
+        - OUTRAS_GARANTIAS_NAO_FIDEJUSSORIAS
+        - SEGUROS_ASSEMELHADOS
+        - GARANTIA_FIDEJUSSORIA
+        - BENS_ARRENDADOS
+        - GARANTIAS_INTERNACIONAIS
+        - OPERACOES_GARANTIDAS_OUTRAS_ENTIDADES
+        - ACORDOS_COMPENSACAO
+        - NAO_APLICAVEL
+        type: string
+      termsConditions:
+        description: Campo aberto para informar as condições contratuais relativas à Modalidade de Empréstimo para pessoa jurídica informada. Pode ser informada a URL referente ao endereço onde constam as condições informadas. Endereço eletrônico de acesso ao canal.
+        maxLength: 2000
+        pattern: \w*\W*
+        type: string
+      type:
+        description: "Modalidades de empréstimos ofertados para pessoas Jurídicas, conforme Circular 4015-Bacen. Segundo cartilha do Bacen: Empréstimo é um contrato entre o cliente e uma instituição financeira (banco, cooperativa de crédito, caixa econômica) pelo qual o cliente recebe uma quantia em dinheiro que deverá ser devolvida em prazo determinado, acrescida dos juros acertados. Os recursos obtidos no empréstimo não tem destinação específica. \nEmpréstimo-Microcrédito Produtivo Orientado - segundo PNMPO é o crédito concedido para financiamento das atividades produtivas, cuja metodologia será estabelecida em regulamento, observada a preferência do relacionamento direto com os empreendedores, admitido o uso de tecnologias digitais e eletrônicas que possam substituir o contato presencial\nEmpréstimo-Cheque especial - operações de crédito vinculadas à conta corrente, nas quais determinado limite de crédito é disponibilizado aos clientes para utilização de acordo com suas conveniências, sem necessidade de comunicação prévia à instituição financeira\nEmpréstimo-Conta garantida - operações de crédito rotativo, nas quais determinado limite de crédito é disponibilizado para utilização pelo cliente, através da simples movimentação da conta corrente e/ou solicitação formal à instituição financeira. As operações classificadas nessa modalidade não devem ter data definida para a amortização do saldo devedor, exceto a estabelecida para vigência do contrato\nEmpréstimo-Capital de giro com prazo de vencimento até 365 dias: operações de crédito voltadas para o financiamento de curto prazo (igual ou inferior a 365 dias) das pessoas jurídicas, vinculadas às necessidades de capital de giro e a um contrato específico que estabeleça prazos, taxas e garantias\nEmpréstimo-Capital de giro com prazo vencimento superior a 365 dias: operações de crédito voltadas para o financiamento de médio e longo prazo (superior a 365 dias) das pessoas jurídicas, vinculadas às necessidades de capital de giro e a um contrato específico que estabeleça prazos, taxas e garantias\nEmpréstimo-Capital de giro rotativo: operações de crédito voltadas para o financiamento de capital de giro, vinculadas a um contrato que estabeleça linha de crédito rotativo, de forma que, à medida que a empresa devedora amortize os empréstimos já tomados, o limite disponível para utilização seja restituído, e amortizações com datas predeterminadas, podendo ser facultado ao devedor repactuar o fluxo de pagamentos ao longo da vigência do contrato"
+        enum:
+        - EMPRESTIMO_MICROCREDITO_PRODUTIVO_ORIENTADO
+        - EMPRESTIMO_CHEQUE_ESPECIAL
+        - EMPRESTIMO_CONTA_GARANTIDA
+        - EMPRESTIMO_CAPITAL_GIRO_PRAZO_VENCIMENTO_ATE_365_DIAS
+        - EMPRESTIMO_CAPITAL_GIRO_PRAZO_VENCIMENTO_SUPERIOR_365_DIAS
+        - EMPRESTIMO_CAPITAL_GIRO_ROTATIVO
+        type: string
+    required:
+    - type
+    - requiredWarranties
+    - termsConditions
+    type: object
+BusinessUnarrangedAccountOverdraft:
+- names:
+  - BusinessUnarrangedAccountOverdraft
+  schema:
+    properties:
+      fees:
+        $ref: ./BusinessUnarrangedAccountOverdraftFees.yaml
+      interestRates:
+        description: Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequência das taxas de juros remuneratórios da Modalidade de crédito
+        items:
+          $ref: ./BusinessUnarrangedAccountOverdraftInterestRates.yaml
+        minItems: 1
+        type: array
+      termsConditions:
+        description: Campo aberto para informar as condições contratuais relativas à Modalidade de Adiantamento a depositante para pessoa natural. Pode ser informada a URL referente ao endereço onde constam as condições informadas. Endereço eletrônico de acesso ao canal.
+        maxLength: 2000
+        type: string
+    required:
+    - termsConditions
+    type: object
+CreditCard:
+- names:
+  - BusinessCreditCardsIdentificationCreditCard
+  - PersonalCreditCardsIdentificationCreditCard
+  schema:
+    properties:
+      additionalInfo:
+        description: Texto livre para especificar categoria de bandeira marcada como 'OUTRAS'
+        maxLength: 50
+        pattern: \w*\W*
+        type: string
+      network:
+        description: 'Categoria de Bandeiras de Cartões de Crédito (Instituidor do arranjo de pagamento).
+
+          Bandeira é a detentora de todos os direitos e deveres da utilização da marca estampada no cartão, inclusive as bandeiras pertencentes aos emissores. p.ex. "American Express", "Diners Club"
+
+          Essas bandeiras estão definidas em documento do BACEN de nome "Elaboração e Remessa de Informações Relativas aos Cartões de Pagamento  Emissores"'
+        enum:
+        - VISA
+        - MASTERCARD
+        - AMERICAN_EXPRESS
+        - DINERS_CLUB
+        - HIPERCARD
+        - BANDEIRA_PROPRIA
+        - CHEQUE_ELETRONICO
+        - ELO
+        - OUTRAS
+        type: string
+    required:
+    - network
+    type: object
+Customers:
+- names:
+  - BusinessAccountsFeesServicesPricesCustomers
+  - BusinessAccountsServiceBundlesPricesCustomers
+  - BusinessCreditCardsFeesServicesPricesCustomers
+  - BusinessCreditCardsInterestRatesApplicationsCustomers
+  - BusinessCreditCardsInterestInstalmentRatesApplicationsCustomers
+  - BusinessFinancingsFeesServicesPricesCustomers
+  - BusinessFinancingsInterestRatesApplicationsCustomers
+  - BusinessInvoiceFinancingsFeesServicesPricesCustomers
+  - BusinessInvoiceFinancingsInterestRatesApplicationsCustomers
+  - BusinessLoansFeesServicesPricesCustomers
+  - BusinessLoansInterestRatesApplicationsCustomers
+  - BusinessUnarrangedAccountOverdraftFeesServicesPricesCustomers
+  - BusinessUnarrangedAccountOverdraftInterestRatesApplicationsCustomers
+  - PersonalAccountsFeesPriorityServicesPricesCustomers
+  - PersonalAccountsFeesOtherServicesPricesCustomers
+  - PersonalAccountsServiceBundlesPricesCustomers
+  - PersonalCreditCardsFeesServicesPricesCustomers
+  - PersonalCreditCardsInterestRatesApplicationsCustomers
+  - PersonalCreditCardsInterestInstalmentRatesApplicationsCustomers
+  - PersonalFinancingsFeesServicesPricesCustomers
+  - PersonalFinancingsInterestRatesApplicationsCustomers
+  - PersonalInvoiceFinancingsFeesServicesPricesCustomers
+  - PersonalInvoiceFinancingsInterestRatesApplicationsCustomers
+  - PersonalLoansFeesServicesPricesCustomers
+  - PersonalLoansInterestRatesApplicationsCustomers
+  schema:
+    description: Traz informações do percentual de clientes apurado em cada faixa
+    properties:
+      rate:
+        description: 'Percentual dos clientes de cada faixa relativa ao serviço ofertado, para pessoa natural informado no período, conforme Res nº32 BCB, 2020. p.ex. ''0.1500''
+
+          (representa uma porcentagem Ex: 0.15 (O valor ao lado representa 15%. O valor ''1 ''representa 100%)
+
+          A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros
+
+          (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)'
+        maxLength: 6
+        pattern: (^[0-9](\.[0-9]{4})$|^NA$)
+        type: string
+    required:
+    - rate
+    type: object
+ElectronicChannels:
+- names:
+  - ElectronicChannels
+  schema:
+    properties: {}
+    type: object
+Fees:
+- names:
+  - BusinessAccountsFees
+  - BusinessCreditCardsFees
+  - BusinessFinancingsFees
+  - BusinessInvoiceFinancingsFees
+  - BusinessLoansFees
+  - BusinessUnarrangedAccountOverdraftFees
+  - PersonalCreditCardsFees
+  - PersonalFinancingsFees
+  - PersonalInvoiceFinancingsFees
+  - PersonalLoansFees
+  schema:
+    description: Objeto que reúne informações de tarifas de serviços
+    properties:
+      services:
+        description: Lista das Tarifas cobradas sobre Serviços
+        items:
+          $ref: ./BusinessAccountsFeesServices.yaml
+        minItems: 1
+        type: array
+    type: object
+- names:
+  - PersonalAccountsFees
+  schema:
+    description: Objeto que reúne informações de tarifas de serviços
+    properties:
+      otherServices:
+        description: Lista das Tarifas cobradas sobre outros Serviços, que não prioritários
+        items:
+          $ref: ./PersonalAccountsFeesOtherServices.yaml
+        minItems: 1
+        type: array
+      priorityServices:
+        description: Lista das Tarifas cobradas sobre Serviços Prioritários
+        items:
+          $ref: ./PersonalAccountsFeesPriorityServices.yaml
+        maxItems: 40
+        minItems: 1
+        type: array
+    type: object
+GeographicCoordinates:
+- names:
+  - SharedAutomatedTellerMachinesPostalAddressGeographicCoordinates
+  - BankingAgentsLocationsPostalAddressGeographicCoordinates
+  - BranchesPostalAddressGeographicCoordinates
+  schema:
+    properties:
+      latitude:
+        description: Informação da Latitude referente a geolocalização informada. Entre -90 e 90.p.ex. '-90.8365180'
+        pattern: ^-?\d{1,2}\.\d{1,9}$
+        type: string
+      longitude:
+        description: 'Informação da Longitude referente a geolocalização informada. Entre -180 e 180.p.ex
+
+          ''-180.836519.'''
+        pattern: ^-?\d{1,2}\.\d{1,8}$
+        type: string
+    type: object
+Identification:
+- names:
+  - SharedAutomatedTellerMachinesIdentification
+  schema:
+    properties:
+      ownerName:
+        description: Nome do proprietário do terminal de Autoatendimento Compartilhado
+        maxLength: 100
+        pattern: \w*\W*
+        type: string
+    type: object
+- names:
+  - BankingAgentsIdentification
+  schema:
+    properties:
+      cnpjNumber:
+        description: 'Número completo do CNPJ do Correspondente Bancário - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica.
+
+          Deve-se ter apenas os números do CNPJ, sem máscara'
+        enum:
+        - Números de 0 a 9
+        maxLength: 14
+        pattern: ^(\d{14})$|^NA$
+        type: string
+      corporationName:
+        description: 'Nome do Correspondente Bancário no pais. Segundo Glossário do Bacen: Correspondentes no pais são Empresas, integrantes ou não do Sistema Financeiro Nacional, contratadas por instituições financeiras e demais instituições autorizadas a funcionar pelo Banco Central do Brasil para a prestação de serviços de atendimento aos clientes e usuários dessas instituições. Os correspondentes mais conhecidos são as lotéricas e o banco postal. p.ex. ''Empresa Correspondente S.A.'''
+        maxLength: 100
+        pattern: \w*\W*
+        type: string
+      groupName:
+        description: 'Nome do conglomerado ao qual pertence o Correspondente Bancário, p.ex.:
+
+          ''Companhia Brasileira de Distribuição''
+
+          ''Empresa Brasileira de Correios e Telégrafos - ECT''
+
+          ''Grupo Pão de Açúcar'''
+        maxLength: 100
+        pattern: \w*\W*
+        type: string
+      isUnderestablishment:
+        description: "Indicador do Correspondente Bancário ser um Substabelecimento (são empresas  que foram contratadas por um correspondente bancário para prestar  serviços.       A empresa substabelecida é tratada como um correspondente do banco e tem praticamente os mesmos direitos e obrigações que possui o correspondente direto)\n true\n false"
+        enum:
+        - 'true'
+        - 'false'
+        type: string
+    required:
+    - corporationName
+    - cnpjNumber
+    type: object
+- names:
+  - BranchesIdentification
+  schema:
+    properties:
+      checkDigit:
+        description: Dígito verificador do código da dependência
+        maxLength: 1
+        pattern: \w*\W*
+        type: string
+      code:
+        description: Código identificador da dependência. Ex. '3006','3035', '1382', '2516', '2856'.
+        enum:
+        - Números de 0 a 9
+        maxLength: 4
+        pattern: \d{4}|^NA$
+        type: string
+      name:
+        description: "Nome da dependência, exemplos: \n         3006, 'SP Ponte Morumbi'\n         3035, 'Uberaba São Benedito'\n         1382, 'ALPHAVILLE-BARUERI'\n         2516, 'PRIME-ALPHAVILLE'\n         2856, 'CID.DE DEUS-U.OSASCO'\n"
+        maxLength: 100
+        pattern: \w*\W*
+        type: string
+      openingDate:
+        description: Data de abertura da dependência (uma string com data conforme especificação RFC-3339. p.ex. 2014-03-19)
+        maxLength: 10
+        pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+        type: string
+      'relatedBranch ':
+        description: Código da agência vinculada ao Posto de Atendimento - se aplicável*
+        enum:
+        - Números de 0 a 9
+        maxLength: 4
+        pattern: \d{4}$
+        type: string
+      type:
+        description: 'Tipo da dependência, segundo a regulamentação do Bacen,  na Resolução Nº 4072, de 26 de abril de 2012:
+
+          Dependência de instituições financeiras e demais instituições, autorizadas a funcionar pelo Banco Central do Brasil, destinada à prática das atividades para as quais a instituição esteja regularmente habilitada.
+
+          Agência  é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, no exercício de atividades da instituição, não podendo ser móvel ou transitória;
+
+          Posto de Atendimento é a dependência subordinada a agência  ou à sede da instituição financeira, destinada ao atendimento ao público no exercício de uma ou mais de suas atividades, podendo ser fixo ou móvel. Segundo Art.15. Os Postos de Atendimento Bancário (PAB), Postos Avançados de Atendimento (PAA), Postos de Atendimento Transitórios (PAT), Postos de Compra de Ouro (PCO), Postos de Atendimento Cooperativo (PAC), Postos de Atendimento de Microcrédito (PAM), Postos Bancários de Arrecadação e Pagamento (PAP) e os Postos de Câmbio atualmente em funcionamento serão considerados PA.
+
+          Posto de Atendimento Eletrônico é a dependência constituída por um ou mais terminais de autoatendimento, subordinada a agência ou à sede da instituição, destinada à prestação de serviços por meio eletrônico, podendo ser fixo ou móvel, permanente ou transitório
+
+          Unidade Administrativa Desmembrada (UAD) segundo a Resolução 4072 , BCB, 2012, no Art. 8º "... é dependência destinada à execução de atividades administrativas da instituição, vedado o atendimento ao público"'
+        enum:
+        - AGENCIA
+        - POSTO_ATENDIMENTO
+        - POSTO_ATENDIMENTO_ELETRONICO
+        - UNIDADE_ADMINISTRATIVA_DESMEMBRADA
+        type: string
+    required:
+    - type
+    - code
+    - checkDigit
+    - name
+    type: object
+- names:
+  - BusinessCreditCardsIdentification
+  - PersonalCreditCardsIdentification
+  schema:
+    properties:
+      creditCard:
+        $ref: ./BusinessCreditCardsIdentificationCreditCard.yaml
+      product:
+        $ref: ./BusinessCreditCardsIdentificationProduct.yaml
+    type: object
+- names:
+  - PhoneChannelsIdentification
+  schema:
+    properties:
+      additionalInfo:
+        description: Campo de texto livre para descrever informações complementateres sobre canais telefônicos. De preenchimento obrigatório quando o tipo de canal de atendimento telefônico selecionado for "OUTROS"
+        maxLength: 300
+        pattern: \w*\W*
+        type: string
+      phones:
+        description: Lista de telefones do Canal de Atendimento
+        items:
+          $ref: ./PhoneChannelsIdentificationPhones.yaml
+        minItems: 1
+        type: array
+      type:
+        description: 'Tipo de canal telefônico de atendimento:
+
+          CENTRAL_TELEFONICA
+
+          SAC
+
+          OUVIDORIA
+
+          OUTROS'
+        enum:
+        - CENTRAL_TELEFONICA
+        - SAC
+        - OUVIDORIA
+        - OUTROS
+        maxLength: 30
+        type: string
+    required:
+    - type
+    type: object
+IncomeRate:
+- names:
+  - BusinessAccountsIncomeRate
+  - PersonalAccountsIncomeRate
+  schema:
+    properties:
+      prepaidPaymentAccount:
+        description: Campo Livre. Deve explicitar o Percentual em favor do titular da conta de pagamento pré-paga. P.ex. '40% de rendimento a.m.'
+        maxLength: 2000
+        pattern: \w*\W*
+        type: string
+      savingAccount:
+        description: Descrição da Remuneração especificamente para Conta de Poupança. Deve ser preenchido com a determinação legal vigente. p.ex. '70% da Taxa Selic (6,5%) = 4,55%, que é o atual rendimento anual da poupança. O rendimento mensal é de 0,3715'
+        maxLength: 2000
+        pattern: \w*\W*
+        type: string
+    type: object
+Indexer:
+- names:
+  - BusinessCreditCardsInterestRatesApplicationsIndexer
+  - BusinessCreditCardsInterestInstalmentRatesApplicationsIndexer
+  - BusinessFinancingsInterestRatesApplicationsIndexer
+  - BusinessInvoiceFinancingsInterestRatesApplicationsIndexer
+  - BusinessLoansInterestRatesApplicationsIndexer
+  - BusinessUnarrangedAccountOverdraftInterestRatesApplicationsIndexer
+  - PersonalCreditCardsInterestInstalmentRatesApplicationsIndexer
+  - PersonalFinancingsInterestRatesApplicationsIndexer
+  - PersonalInvoiceFinancingsInterestRatesApplicationsIndexer
+  - PersonalLoansInterestRatesApplicationsIndexer
+  schema:
+    properties:
+      rate:
+        description: 'Percentual que corresponde a mediana (taxa efetiva) cobrada do cliente pela utilização do crédito rotativo, no intervalo informado. p.ex. ''0,8700%''
+
+          A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros
+
+          (representação de porcentagem p.ex: 0.15. Este valor representa 15%. O valor 1 representa 100%)'
+        maxLength: 6
+        pattern: (^[0-9](\.[0-9]{4})$|^NA$)
+        type: string
+    required:
+    - rate
+    type: object
+InstalmentRates:
+- names:
+  - BusinessCreditCardsInterestInstalmentRates
+  schema:
+    description: Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequência das taxas de juros remuneratórios para parcelamento do saldo devedor
+    properties:
+      applications:
+        description: Lista distribuição percentuais relativos à taxa de juros remuneratórios
+        items:
+          $ref: ./BusinessCreditCardsInterestInstalmentRatesApplications.yaml
+        maxItems: 4
+        minItems: 4
+        type: array
+      maximumRate:
+        description: 'Percentual máximo cobrado (taxa efetiva) para o pagamento parcelado do saldo devedor na fatura do mês de referência.
+
+          (A apuração deve pode ser feita com até 4 casas decimais. A representação de porcentagem p.ex: do 0.1500 representa 15%. Desta forma, o valor 1 representa 100%)'
+        maxLength: 6
+        pattern: (^[0-9](\.[0-9]{4})$|^NA$)
+        type: string
+      minimumRate:
+        description: 'Percentual mínimo cobrado (taxa efetiva) para o pagamento parcelado do saldo devedor na fatura do mês de referência.
+
+          (A apuração deve pode ser feita com até 4 casas decimais. A representação de porcentagem p.ex: do 0.1500 representa 15%. Desta forma, o valor 1 representa 100%)'
+        maxLength: 6
+        pattern: (^[0-9](\.[0-9]{4})$|^NA$)
+        type: string
+      rate:
+        description: 'Percentual que incide sobre a composição das taxas de juros remuneratórios  sobre o parcelamento do saldo devedor
+
+          (representa uma porcentagem Ex: 0.15 (O valor ao lado representa 15%. O valor ''1 ''representa 100%)
+
+          A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros
+
+          (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)'
+        maxLength: 4
+        pattern: '^((\d{1,9}\.\d{2}){1}|NA)$ '
+        type: string
+      referentialRateIndexer:
+        description: 'Tipos de taxas referenciais ou indexadores, conforme Anexo 5: Taxa referencial ou Indexador (Indx), do Documento 3040 que incide sobre o parcelamento do saldo devedor'
+        enum:
+        - SEM_INDEXADOR_TAXA
+        - PRE_FIXADO
+        - POS_FIXADO_TR_TBF
+        - POS_FIXADO_TJLP
+        - POS_FIXADO_LIBOR
+        - POS_FIXADO_TLP
+        - OUTRAS_TAXAS_POS_FIXADAS
+        - FLUTUANTES_CDI
+        - FLUTUANTES_SELIC
+        - OUTRAS_TAXAS_FLUTUANTES
+        - INDICES_PRECOS_IGPM
+        - INDICES_PRECOS_IPCA
+        - INDICES_PRECOS_IPCC
+        - OUTROS_INDICES_PRECO
+        - CREDITO_RURAL_TCR_PRE
+        - CREDITO_RURAL_TCR_POS
+        - CREDITO_RURAL_TRFC_PRE
+        - CREDITO_RURAL_TRFC_POS
+        - OUTROS_INDEXADORES
+        type: string
+    required:
+    - referentialRateIndexer
+    - rate
+    - minimumRate
+    - maximumRate
+    type: object
+- names:
+  - PersonalCreditCardsInterestInstalmentRates
+  schema:
+    description: Lista da representação que traz o conjunto de informações necessárias para demonstrar a distribuição de frequência das taxas de juros remuneratórios para parcelamento do saldo devedor
+    properties:
+      applications:
+        description: Lista distribuição percentuais relativos à taxa de juros remuneratórios
+        items:
+          $ref: ./PersonalCreditCardsInterestInstalmentRatesApplications.yaml
+        maxItems: 4
+        minItems: 4
+        type: array
+      maximum:
+        $ref: ./PersonalCreditCardsInterestInstalmentRatesMaximum.yaml
+      minimum:
+        $ref: ./PersonalCreditCardsInterestInstalmentRatesMinimum.yaml
+      rate:
+        description: 'Percentual que incide sobre a composição das taxas de juros remuneratórios  sobre o parcelamento do saldo devedor
+
+          (representa uma porcentagem Ex: 0.15 (O valor ao lado representa 15%. O valor ''1 ''representa 100%)
+
+          A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros
+
+          (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)'
+        maxLength: 4
+        pattern: ^((\d{1,9}\.\d{2}){1}|NA)$
+        type: string
+      referentialRateIndexer:
+        description: 'Tipos de taxas referenciais ou indexadores, conforme Anexo 5: Taxa referencial ou Indexador (Indx), do Documento 3040 que incide sobre o parcelamento do saldo devedor'
+        enum:
+        - SEM_INDEXADOR_TAXA
+        - PRE_FIXADO
+        - POS_FIXADO_TR_TBF
+        - POS_FIXADO_TJLP
+        - POS_FIXADO_LIBOR
+        - POS_FIXADO_TLP
+        - OUTRAS_TAXAS_POS_FIXADAS
+        - FLUTUANTES_CDI
+        - FLUTUANTES_SELIC
+        - OUTRAS_TAXAS_FLUTUANTES
+        - INDICES_PRECOS_IGPM
+        - INDICES_PRECOS_IPCA
+        - INDICES_PRECOS_IPCC
+        - OUTROS_INDICES_PRECO
+        - CREDITO_RURAL_TCR_PRE
+        - CREDITO_RURAL_TCR_POS
+        - CREDITO_RURAL_TRFC_PRE
+        - CREDITO_RURAL_TRFC_POS
+        - OUTROS_INDEXADORES
+        type: string
+    required:
+    - referentialRateIndexer
+    - rate
+    type: object
+Interest:
+- names:
+  - BusinessCreditCardsInterest
+  - PersonalCreditCardsInterest
+  schema:
+    properties:
+      instalmentRates:
+        description: Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequência das taxas de juros remuneratórios para parcelamento do saldo devedor
+        items:
+          $ref: ./BusinessCreditCardsInterestInstalmentRates.yaml
+        minItems: 1
+        type: array
+      otherCredits:
+        description: Lista de outras operações de crédito
+        items:
+          $ref: ./BusinessCreditCardsInterestOtherCredits.yaml
+        maxItems: 3
+        minItems: 1
+        type: array
+      rates:
+        description: Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequência das taxas de juros remuneratórios do Crédito Rotativo
+        items:
+          $ref: ./BusinessCreditCardsInterestRates.yaml
+        minItems: 1
+        type: array
+    type: object
+InterestRate:
+- names:
+  - PersonalFinancingsInterestRate
+  schema:
+    properties:
+      maximumRate:
+        description: "Percentual máximo cobrado (taxa efetiva) no mês de referência, para o crédito contratado \nA apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros\n(representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)"
+        maxLength: 6
+        pattern: (^[0-9](\.[0-9]{4})$|^NA$)
+        type: string
+    required:
+    - maximumRate
+    type: object
+InterestRates:
+- names:
+  - BusinessFinancingsInterestRates
+  - BusinessInvoiceFinancingsInterestRates
+  - BusinessLoansInterestRates
+  - BusinessUnarrangedAccountOverdraftInterestRates
+  - PersonalInvoiceFinancingsInterestRates
+  - PersonalLoansInterestRates
+  schema:
+    description: Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequências das taxas de juros remuneratórios da Modalidade de crédito
+    properties:
+      applications:
+        description: Lista  das faixas de cobrança da taxa efetiva aplicada pela contratação do crédito
+        items:
+          $ref: ./BusinessFinancingsInterestRatesApplications.yaml
+        maxItems: 4
+        minItems: 4
+        type: array
+      maximumRate:
+        description: "Percentual máximo cobrado (taxa efetiva) no mês de referência, para o crédito contratado \nA apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros\n(representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)"
+        maxLength: 6
+        pattern: '(^[0-9](\.[0-9]{4})$|^NA$)Corrigir: deve trazer formato decimal: 1 casa antes do ponto e 4 casas decimais, permitindo ser preenchida com NA'
+        type: string
+      minimumRate:
+        description: "Percentual mínimo cobrado (taxa efetiva) no mês de referência, para o crédito contratado \nA apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros\n(representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)"
+        maxLength: 6
+        pattern: '(^[0-9](\.[0-9]{4})$|^NA$)Corrigir: deve trazer formato decimal: 1 casa antes do ponto e 4 casas decimais, permitindo ser preenchida com NA'
+        type: string
+      rate:
+        description: "Percentual do índice ou da taxa referencial que incide sobre a composição das taxas de juros remuneratórios. \n(representa uma porcentagem Ex: 0.15 (O valor ao lado representa 15%. O valor '1 'representa 100%)\nA apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros\n(representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)"
+        maxLength: 4
+        pattern: ^((\d{1,9}\.\d{2}){1}|NA)$
+        type: string
+      referentialRateIndexer:
+        description: 'Tipos de taxas referenciais ou indexadores, conforme Anexo 5: Taxa referencial ou Indexador (Indx), do Documento 3040'
+        enum:
+        - SEM_INDEXADOR_TAXA
+        - PRE_FIXADO
+        - POS_FIXADO_TR_TBF
+        - POS_FIXADO_TJLP
+        - POS_FIXADO_LIBOR
+        - POS_FIXADO_TLP
+        - OUTRAS_TAXAS_POS_FIXADAS
+        - FLUTUANTES_CDI
+        - FLUTUANTES_SELIC
+        - OUTRAS_TAXAS_FLUTUANTES
+        - INDICES_PRECOS_IGPM
+        - INDICES_PRECOS_IPCA
+        - INDICES_PRECOS_IPCC
+        - OUTROS_INDICES_PRECO
+        - CREDITO_RURAL_TCR_PRE
+        - CREDITO_RURAL_TCR_POS
+        - CREDITO_RURAL_TRFC_PRE
+        - CREDITO_RURAL_TRFC_POS
+        - OUTROS_INDEXADORES
+        type: string
+    required:
+    - referentialRateIndexer
+    - rate
+    - minimumRate
+    - maximumRate
+    type: object
+- names:
+  - PersonalFinancingsInterestRates
+  schema:
+    description: Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequência das taxas de juros remuneratórios da Modalidade de crédito
+    properties:
+      applications:
+        description: Lista  das faixas de cobrança da taxa efetiva aplicada pela contratação do crédito
+        items:
+          $ref: ./PersonalFinancingsInterestRatesApplications.yaml
+        maxItems: 4
+        minItems: 4
+        type: array
+      minimumRate:
+        description: "Percentual mínimo cobrado (taxa efetiva) no mês de referência, para o crédito contratado \nA apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros\n(representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)"
+        maxLength: 6
+        pattern: '(^[0-9](\.[0-9]{4})$|^NA$)Corrigir: deve trazer formato decimal: 1 casa antes do ponto e 4 casas decimais, permitindo ser preenchida com NA'
+        type: string
+      rate:
+        description: "Percentual do índice ou da taxa referencial que incide sobre a composição das taxas de juros remuneratórios. \n(representa uma porcentagem Ex: 0.15 (O valor ao lado representa 15%. O valor '1 'representa 100%)\nA apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros\n(representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)"
+        maxLength: 4
+        pattern: '^((\d{1,9}\.\d{2}){1}|NA)$Corrigir: deve trazer formato decimal: 1 casa antes do ponto e 2 casas decimais, permitindo ser preenchida com NA'
+        type: string
+      referentialRateIndexer:
+        description: 'Tipos de taxas referenciais ou indexadores, conforme Anexo 5: Taxa referencial ou Indexador (Indx), do Documento 3040'
+        enum:
+        - SEM_INDEXADOR_TAXA
+        - PRE_FIXADO
+        - POS_FIXADO_TR_TBF
+        - POS_FIXADO_TJLP
+        - POS_FIXADO_LIBOR
+        - POS_FIXADO_TLP
+        - OUTRAS_TAXAS_POS_FIXADAS
+        - FLUTUANTES_CDI
+        - FLUTUANTES_SELIC
+        - OUTRAS_TAXAS_FLUTUANTES
+        - INDICES_PRECOS_IGPM
+        - INDICES_PRECOS_IPCA
+        - INDICES_PRECOS_IPCC
+        - OUTROS_INDICES_PRECO
+        - CREDITO_RURAL_TCR_PRE
+        - CREDITO_RURAL_TCR_POS
+        - CREDITO_RURAL_TRFC_PRE
+        - CREDITO_RURAL_TRFC_POS
+        - OUTROS_INDEXADORES
+        type: string
+    required:
+    - referentialRateIndexer
+    - rate
+    - minimumRate
+    type: object
+Locations:
+- names:
+  - BankingAgentsLocations
+  schema:
+    description: Relação de informações referentes as localizações de um Correspondente bancário
+    properties:
+      availability:
+        $ref: ./BankingAgentsLocationsAvailability.yaml
+      phones:
+        items:
+          $ref: ./BankingAgentsLocationsPhones.yaml
+        type: array
+      postalAddress:
+        $ref: ./BankingAgentsLocationsPostalAddress.yaml
+    type: object
+Maximum:
+- names:
+  - BusinessAccountsFeesServicesMaximum
+  - BusinessAccountsServiceBundlesMaximum
+  - BusinessCreditCardsFeesServicesMaximum
+  - BusinessFinancingsFeesServicesMaximum
+  - BusinessInvoiceFinancingsFeesServicesMaximum
+  - BusinessLoansFeesServicesMaximum
+  - BusinessUnarrangedAccountOverdraftFeesServicesMaximum
+  - PersonalAccountsFeesPriorityServicesMaximum
+  - PersonalAccountsFeesOtherServicesMaximum
+  - PersonalAccountsServiceBundlesMaximum
+  - PersonalCreditCardsFeesServicesMaximum
+  - PersonalFinancingsFeesServicesMaximum
+  - PersonalLoansFeesServicesMaximum
+  schema:
+    properties:
+      currency:
+        description: Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217. p.ex.'BRL'
+        enum:
+        - moeda (ISO-4217)
+        maxLength: 3
+        type: string
+      value:
+        description: Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência
+        maxLength: 12
+        pattern: ^((\d{1,9}\.\d{2}){1}|NA)$  
+        type: string
+    required:
+    - value
+    - currency
+    type: object
+- names:
+  - PersonalCreditCardsInterestRatesMaximum
+  - PersonalCreditCardsInterestInstalmentRatesMaximum
+  schema:
+    properties:
+      rate:
+        description: 'Percentual máximo cobrado (taxa efetiva) no mês de referência, pela utilização do crédito rotativo
+
+          (A apuração deve pode ser feita com até 4 casas decimais. A representação de porcentagem p.ex: do 0.1500 representa 15%. Desta forma, o valor 1 representa 100%)'
+        maxLength: 6
+        pattern: (^[0-9](\.[0-9]{4})$|^NA$)
+        type: string
+    required:
+    - rate
+    type: object
+Minimum:
+- names:
+  - BusinessAccountsFeesServicesMinimum
+  - BusinessAccountsServiceBundlesMinimum
+  - BusinessCreditCardsFeesServicesMinimum
+  - BusinessFinancingsFeesServicesMinimum
+  - BusinessInvoiceFinancingsFeesServicesMinimum
+  - BusinessLoansFeesServicesMinimum
+  - BusinessUnarrangedAccountOverdraftFeesServicesMinimum
+  - PersonalAccountsFeesPriorityServicesMinimum
+  - PersonalAccountsFeesOtherServicesMinimum
+  - PersonalAccountsServiceBundlesMinimum
+  - PersonalCreditCardsFeesServicesMinimum
+  - PersonalFinancingsFeesServicesMinimum
+  - PersonalLoansFeesServicesMinimum
+  schema:
+    properties:
+      currency:
+        description: Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217. p.ex.'BRL'
+        enum:
+        - moeda (ISO-4217)
+        maxLength: 3
+        type: string
+      value:
+        description: Valor mínimo apurado para a tarifa de serviços sobre a base de clientes no mês de referência
+        maxLength: 12
+        pattern: ^((\d{1,9}\.\d{2}){1}|NA)$  
+        type: string
+    required:
+    - value
+    - currency
+    type: object
+- names:
+  - PersonalCreditCardsInterestRatesMinimum
+  - PersonalCreditCardsInterestInstalmentRatesMinimum
+  schema:
+    properties:
+      rate:
+        description: 'Percentual mínimo cobrado (taxa efetiva) no mês de referência, pela utilização do crédito rotativo
+
+          (A apuração deve pode ser feita com até 4 casas decimais. A representação de porcentagem p.ex: do 0.1500 representa 15%. Desta forma, o valor 1 representa 100%)'
+        maxLength: 6
+        pattern: (^[0-9](\.[0-9]{4})$|^NA$)
+        type: string
+    required:
+    - rate
+    type: object
+MinimumBalance:
+- names:
+  - BusinessAccountsTermsConditionsMinimumBalance
+  - PersonalAccountsTermsConditionsMinimumBalance
+  schema:
+    properties:
+      currency:
+        description: Moeda referente ao saldo mínimo exigido, segundo modelo ISO-4217. p.ex. 'BRL'
+        enum:
+        - moeda (ISO-4217)
+        type: string
+      value:
+        description: Saldo mínimo exigido nos Termos e condições contratuais, que regem as contas comercializadas. p.ex. '200.00'
+        maxLength: 12
+        pattern: ^((\d{1,9}\.\d{2}){1}|NA)$  
+        type: string
+    required:
+    - value
+    - currency
+    type: object
+OtherCredits:
+- names:
+  - BusinessCreditCardsInterestOtherCredits
+  - PersonalCreditCardsInterestOtherCredits
+  schema:
+    description: Lista de outras operações de crédito
+    properties:
+      additionalInfo:
+        description: Campo Texto para descrever outras operações de crédito marcadas como 'OUTROS'
+        maxLength: 50
+        pattern: \w*\W*
+        type: string
+      code:
+        description: Lista de outras operações de crédito. p.ex. 'SAQUE_A_CREDITO'
+        enum:
+        - SAQUE_A_CREDITO
+        - PAGAMENTOS_CONTAS
+        - OUTROS
+        type: string
+    required:
+    - code
+    type: object
+OtherServices:
+- names:
+  - PersonalAccountsFeesOtherServices
+  schema:
+    description: Lista das Tarifas cobradas sobre outros Serviços, que não prioritários
+    properties:
+      chargingTriggerInfo:
+        description: Fatos geradores de cobrança que incidem sobre  serviços para pessoa natural. (Campo Livre)
+        maxLength: 2000
+        pattern: \w*\W*
+        type: string
+      code:
+        description: ' Siglas de identificação do Serviço (Campo Livre)'
+        maxLength: 100
+        type: string
+      maximum:
+        $ref: ./PersonalAccountsFeesOtherServicesMaximum.yaml
+      minimum:
+        $ref: ./PersonalAccountsFeesOtherServicesMinimum.yaml
+      name:
+        description: Nome do Serviço que incide sobre tipo de conta selecionado para pessoa natural(Campo Livre)
+        maxLength: 250
+        pattern: \w*\W*
+        type: string
+      prices:
+        description: Lista distribuição preços tarifas de serviços
+        items:
+          $ref: ./PersonalAccountsFeesOtherServicesPrices.yaml
+        maxItems: 4
+        minItems: 4
+        type: array
+    required:
+    - name
+    - code
+    - chargingTriggerInfo
+    type: object
+PersonalAccounts:
+- names:
+  - PersonalAccounts
+  schema:
+    properties:
+      additionalInfo:
+        description: Texto livre para complementar informação relativa ao Canal disponível, quando no campo 'openingClosingChannels' estiver preenchida a opção 'OUTROS'
+        maxLength: 100
+        pattern: \w*\W*
+        type: string
+      fees:
+        $ref: ./PersonalAccountsFees.yaml
+      incomeRate:
+        $ref: ./PersonalAccountsIncomeRate.yaml
+      'openingClosingChannels ':
+        description: Lista dos Canais disponíveis para abertura e encerramento de contas, (vide Enum)
+        enum:
+        - DEPENDENCIAS_PROPRIAS
+        - CORRESPONDENTES_BANCARIOS
+        - INTERNET_BANKING
+        - MOBILE_BANKING
+        - CENTRAL_TELEFONICA
+        - CHAT
+        - OUTROS
+        type: string
+      serviceBundles:
+        description: Lista dos Pacotes de serviços
+        items:
+          $ref: ./PersonalAccountsServiceBundles.yaml
+        minItems: 1
+        type: array
+      termsConditions:
+        $ref: ./PersonalAccountsTermsConditions.yaml
+      'transactionMethods  ':
+        description: Lista de formas de movimentação possíveis para a conta. (Vide Enum)
+        enum:
+        - MOVIMENTACAO_ELETRONICA
+        - MOVIMENTACAO_CHEQUE
+        - MOVIMENTACAO_CARTAO
+        - MOVIMENTACAO_PRESENCIAL
+        type: string
+      type:
+        description: 'Tipos de contas ofertadas para pessoa natural, p.ex. ''CONTA_DEPOSITO_A_VISTA''.
+
+          Conta de depósito à vista ou Conta corrente - é o tipo mais comum. Nela, o dinheiro fica à sua disposição para ser sacado a qualquer momento. Essa conta não gera rendimentos para o depositante
+
+          Conta poupança - foi criada para estimular as pessoas a pouparem. O dinheiro que ficar na conta por trinta dias passa a gerar rendimentos, com isenção de imposto de renda para quem declara. Ou seja, o dinheiro “cresce” (rende) enquanto ficar guardado na conta. Cada depósito terá rendimentos de mês em mês, sempre no dia do mês em que o dinheiro tiver sido depositado
+
+          Conta de pagamento pré-paga: segundo CIRCULAR Nº 3.680, BCB de  2013, é a ''destinada à execução de transações de pagamento em moeda eletrônica realizadas com base em fundos denominados em reais previamente aportados'''
+        enum:
+        - CONTA_DEPOSITO_A_VISTA
+        - CONTA_POUPANCA
+        - CONTA_PAGAMENTO_PRE_PAGA
+        type: string
+    required:
+    - type
+    - 'openingClosingChannels '
+    - 'transactionMethods  '
+    type: object
+PersonalCreditCards:
+- names:
+  - PersonalCreditCards
+  schema:
+    properties:
+      fees:
+        $ref: ./PersonalCreditCardsFees.yaml
+      identification:
+        $ref: ./PersonalCreditCardsIdentification.yaml
+      interest:
+        $ref: ./PersonalCreditCardsInterest.yaml
+      name:
+        description: 'Denominação/Identificação do nome da conta de pagamento pós-paga (cartão).Conforme CIRCULAR Nº 3.680,BCB, 2013: ''conta de pagamento pós-paga: destinada à execução de transações de pagamento que independem do aporte prévio de recursos'' p.ex. ''Cartão Universitário Bem-Vindo'''
+        maxLength: 50
+        pattern: \w*\W*
+        type: string
+      rewardsProgram:
+        $ref: ./PersonalCreditCardsRewardsProgram.yaml
+      termsConditions:
+        $ref: ./PersonalCreditCardsTermsConditions.yaml
+    required:
+    - name
+    type: object
+PersonalFinancings:
+- names:
+  - PersonalFinancings
+  schema:
+    properties:
+      fees:
+        $ref: ./PersonalFinancingsFees.yaml
+      interestRate:
+        $ref: ./PersonalFinancingsInterestRate.yaml
+      interestRates:
+        description: Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequência das taxas de juros remuneratórios da Modalidade de crédito
+        items:
+          $ref: ./PersonalFinancingsInterestRates.yaml
+        minItems: 1
+        type: array
+      requiredWarranties:
+        description: "Lista das garantias exigidas, segundo documento 3040 do Bacen: \n-cessão de direitos creditórios: o cedente transfere ao credor/cessionário a titularidade de direitos creditórios, até a liquidação da dívida. O credor/cessionário passa a recebê-los diretamente dos devedores e credita o produto da operação para o cedente na operação que originou a cessão, até a sua liquidação \n-caução: garantia instituída sobre créditos do garantidor \n-penhor: direito real que consiste na tradição de uma coisa móvel ou mobilizável, suscetível de alienação, realizada pelo devedor ou por terceiro ao credor, a fim de garantir o pagamento do débito \n-alienação fiduciária: transferência ao credor, ou fiduciário, da propriedade do bem \n-hipoteca: direito real de garantia que afeta um bem imóvel para o cumprimento da obrigação \n-operações garantidas pelo governo: nas instâncias federal, estadual ou municipal\n-outras garantias não fidejussórias: as garantias reais não descritas como: cessão de direitos creditórios, caução, penhor, alienação fiduciária, hipoteca ou operação garantida pelo governo \n-seguros e assemelhados: os seguros (e assemelhados) contratados para garantir o pagamento da operação em circunstâncias adversas\n-garantia fidejussória: baseada na fidelidade do garantidor em cumprir as obrigações, caso o devedor não o faça\n-bens arrendados: bem objeto do arrendamento financeiro\n-garantias internacionais: declarar se a garantia é mitigadora ou não, observados os critérios definidos pela Circular 3.644, de 4 de março de 2013 \n-operações garantidas por outras entidade: declarar as garantias prestadas pelas entidades descritas no item 3. Informações de Garantias (i) do documento 3040 - Bacen \n-acordos de compensação: operações que sejam abrangidas por acordos para a compensação e liquidação de obrigações no âmbito do SFN, nos termos da Resolução 3.263, de 24 de fevereiro de 2005\n-não aplicável"
+        enum:
+        - CESSAO_DIREITOS_CREDITORIOS
+        - CAUCAO
+        - PENHOR
+        - ALIENACAO_FIDUCIARIA
+        - HIPOTECA
+        - OPERACOES_GARANTIDAS_PELO_GOVERNO
+        - OUTRAS_GARANTIAS_NAO_FIDEJUSSORIAS
+        - SEGUROS_ASSEMELHADOS
+        - GARANTIA_FIDEJUSSORIA
+        - BENS_ARRENDADOS
+        - GARANTIAS_INTERNACIONAIS
+        - OPERACOES_GARANTIDAS_OUTRAS_ENTIDADES
+        - ACORDOS_COMPENSACAO
+        - NAO_APLICAVEL
+        type: string
+      termsConditions:
+        description: Campo aberto para informar as condições contratuais relativas à Modalidade de Financiamentos para pessoa jurídica informada. Pode ser informada a URL referente ao endereço onde constam as condições informadas. Endereço eletrônico de acesso ao canal.
+        maxLength: 2000
+        pattern: \w*\W*
+        type: string
+      type:
+        description: "Modalidades de financiamentos ofertadas para pessoa natural, conforme Circular 4015-Bacen. Segundo cartilha do Bacen: Financiamento é um contrato entre o cliente e uma instituição financeira, mas com, destinação específica como para a aquisição de veículo ou de bem imóvel, que funcionam como garantia para o crédito concedido. p. ex. financiamento imobiliário e de veículos. São eles segundo descrições obtidas junto ao Documento 3040 do Bacen:\nfinanciamento-aquisição de bens – veículos automotores - Financiamentos a pessoas natural vinculadas à aquisição de bens veículos automotores, que tenham o bem financiado alienado fiduciariamente como garantia da operação\nfinanciamento-aquisição de bens – outros bens - destinados a financiar a aquisição de bens, serviços, máquinas e equipamentos, exceto veículos automotores\nfinanciamento-microcrédito - operação de crédito realizada para financiamento de atividades produtivas de pessoas naturais ou jurídicas, organizadas de forma individual ou coletiva, com renda ou receita bruta anual de até R$200.000,00 (duzentos mil reais) \nfinanciamento rural-custeio - financiamentos concedidos a produtores rurais para custeio, tanto agrícolas quanto pecuários (destina-se a cobrir os gastos normais dos ciclos produtivos, como aquisição de insumo);\nfinanciamento rural-investimento - financiamentos concedidos a produtores rurais para investimento, tanto agrícolas quanto pecuários (aplicações em bens ou serviços que serão utilizados por vários ciclos produtivos, como compra de máquinas e equipamentos, construção e reforma de benfeitorias); \nfinanciamento rural-comercialização - financiamentos concedidos a produtores rurais para comercialização, tanto agrícolas quanto pecuários (destina-se às despesas posteriores à produção, como armazenagem, ou conversão em espécie dos títulos de venda a prazo da produção);\nfinanciamento rural-industrialização - financiamentos concedidos a produtores rurais para industrialização, tanto agrícolas quanto pecuários (destina-se à industrialização de produtos agropecuários por produtores ou suas cooperativas);\nfinanciamento imobiliário-Sistema Financeiro da Habitação (SFH) - financiamento para aquisição ou construção de unidades habitacionais enquadradas no Sistema Financeiro de Habitação - SFH. O SFH foi criado pela Lei 4.380/64 e tem como característica a regulamentação das condições de financiamento imobiliário, por exemplo, taxa de juros, quota, prazos. O Governo Federal pode intervir em qualquer um dos aspectos do financiamento. Nesse sistema estão incluídas as operações contratadas com recursos do SBPE e do FGTS, inclusive o PMCMV (Programa Minha Casa, Minha Vida). As operações com recursos do FGTS observam, ainda, regulamentação própria. \nfinanciamento imobiliário-Sistema Financeiro da Habitação (SFI) - O SFI não possui regulamentação das condições de financiamento, sendo estas definidas pelo Agentes Financeiros"
+        enum:
+        - FINANCIAMENTO_AQUISICAO_BENS_VEICULOS_AUTOMOTORES
+        - FINANCIAMENTO_AQUISICAO_BENS_OUTROS_BENS
+        - FINANCIAMENTO-MICROCREDITO
+        - FINANCIAMENTO_RURAL_CUSTEIO
+        - FINANCIAMENTO_RURAL_INVESTIMENTO
+        - FINANCIAMENTO_RURAL_COMERCIALIZACAO
+        - FINANCIAMENTO_RURAL_INDUSTRIALIZACAO
+        - FINANCIAMENTO_IMOBILIARIO_SISTEMA_FINANCEIRO_HABITACAO-SFH
+        - FINANCIAMENTO_IMOBILIARIO_SISTEMA_FINANCEIRO_HABITACAO-SFI
+        type: string
+    required:
+    - type
+    - requiredWarranties
+    - termsConditions
+    type: object
+PersonalInvoiceFinancings:
+- names:
+  - PersonalInvoiceFinancings
+  schema:
+    properties:
+      fees:
+        $ref: ./PersonalInvoiceFinancingsFees.yaml
+      interestRates:
+        description: Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequência das taxas de juros remuneratórios da Modalidade de crédito
+        items:
+          $ref: ./PersonalInvoiceFinancingsInterestRates.yaml
+        minItems: 1
+        type: array
+      requiredWarranties:
+        description: "Lista das garantias exigidas, segundo documento 3040 do Bacen: \n-cessão de direitos creditórios: o cedente transfere ao credor/cessionário a titularidade de direitos creditórios, até a liquidação da dívida. O credor/cessionário passa a recebê-los diretamente dos devedores e credita o produto da operação para o cedente na operação que originou a cessão, até a sua liquidação \n-caução: garantia instituída sobre créditos do garantidor \n-penhor: direito real que consiste na tradição de uma coisa móvel ou mobilizável, suscetível de alienação, realizada pelo devedor ou por terceiro ao credor, a fim de garantir o pagamento do débito \n-alienação fiduciária: transferência ao credor, ou fiduciário, da propriedade do bem \n-hipoteca: direito real de garantia que afeta um bem imóvel para o cumprimento da obrigação \n-operações garantidas pelo governo: nas instâncias federal, estadual ou municipal\n-outras garantias não fidejussórias: as garantias reais não descritas como: cessão de direitos creditórios, caução, penhor, alienação fiduciária, hipoteca ou operação garantida pelo governo \n-seguros e assemelhados: os seguros (e assemelhados) contratados para garantir o pagamento da operação em circunstâncias adversas\n-garantia fidejussória: baseada na fidelidade do garantidor em cumprir as obrigações, caso o devedor não o faça\n-bens arrendados: bem objeto do arrendamento financeiro\n-garantias internacionais: declarar se a garantia é mitigadora ou não, observados os critérios definidos pela Circular 3.644, de 4 de março de 2013 \n-operações garantidas por outras entidade: declarar as garantias prestadas pelas entidades descritas no item 3. Informações de Garantias (i) do documento 3040 - Bacen \n-acordos de compensação: operações que sejam abrangidas por acordos para a compensação e liquidação de obrigações no âmbito do SFN, nos termos da Resolução 3.263, de 24 de fevereiro de 2005\n-não aplicável"
+        enum:
+        - CESSAO_DIREITOS_CREDITORIOS
+        - CAUCAO
+        - PENHOR
+        - ALIENACAO_FIDUCIARIA
+        - HIPOTECA
+        - OPERACOES_GARANTIDAS_PELO_GOVERNO
+        - OUTRAS_GARANTIAS_NAO_FIDEJUSSORIAS
+        - SEGUROS_ASSEMELHADOS
+        - GARANTIA_FIDEJUSSORIA
+        - BENS_ARRENDADOS
+        - GARANTIAS_INTERNACIONAIS
+        - OPERACOES_GARANTIDAS_OUTRAS_ENTIDADES
+        - ACORDOS_COMPENSACAO
+        - NAO_APLICAVEL
+        type: string
+      termsConditions:
+        description: Campo aberto para informar as condições contratuais relativas à Modalidade de Financiamentos para pessoa jurídica informada. Pode ser informada a URL referente ao endereço onde constam as condições informadas. Endereço eletrônico de acesso ao canal.
+        maxLength: 2000
+        pattern: \w*\W*
+        type: string
+      type:
+        description: 'Modalidades de Direitos Creditórios Descontados ofertados, conforme Circular 4015-Bacen. Direito creditório descontado é a antecipação de créditos relativos por ex. ao: desconto de duplicatas, desconto de cheques, antecipação de fatura de cartão de crédito
+
+          desconto de duplicatas: operações de crédito para adiantamento de recursos com base em fluxo de caixa futuro vinculado a duplicatas mercantis
+
+          desconto de cheques: operações de crédito para adiantamento de recursos com base em fluxo de caixa futuro vinculado a cheques custodiados
+
+          antecipação de fatura de cartão de crédito: operações de crédito para adiantamento de recursos  com base em fluxo de caixa futuro vinculado a direitos creditórios sob a forma de faturas de cartão de crédito
+
+          outros direitos creditórios descontados: operação  de crédito que permite antecipar o valor da venda a prazo dos produtos ou serviços mediante desconto de nota promissória
+
+          outros títulos descontados: demais títulos descontados, regulamentação própria'
+        enum:
+        - DESCONTO_DUPLICATAS
+        - DESCONTO_CHEQUES
+        - ANTECIPACAO_FATURA_CARTAO_CREDITO
+        - OUTROS_DIREITOS_CREDITORIOS_DESCONTADOS
+        - OUTROS_TITULOS_DESCONTADOS
+        type: string
+    required:
+    - type
+    - requiredWarranties
+    - termsConditions
+    type: object
+PersonalLoans:
+- names:
+  - PersonalLoans
+  schema:
+    properties:
+      fees:
+        $ref: ./PersonalLoansFees.yaml
+      interestRates:
+        description: Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequência das taxas de juros remuneratórios da Modalidade de crédito
+        items:
+          $ref: ./PersonalLoansInterestRates.yaml
+        minItems: 1
+        type: array
+      requiredWarranties:
+        description: "Lista das garantias exigidas, segundo documento 3040 do Bacen: \n-cessão de direitos creditórios: o cedente transfere ao credor/cessionário a titularidade de direitos creditórios, até a liquidação da dívida. O credor/cessionário passa a recebê-los diretamente dos devedores e credita o produto da operação para o cedente na operação que originou a cessão, até a sua liquidação \n-caução: garantia instituída sobre créditos do garantidor \n-penhor: direito real que consiste na tradição de uma coisa móvel ou mobilizável, suscetível de alienação, realizada pelo devedor ou por terceiro ao credor, a fim de garantir o pagamento do débito \n-alienação fiduciária: transferência ao credor, ou fiduciário, da propriedade do bem \n-hipoteca: direito real de garantia que afeta um bem imóvel para o cumprimento da obrigação \n-operações garantidas pelo governo: nas instâncias federal, estadual ou municipal\n-outras garantias não fidejussórias: as garantias reais não descritas como: cessão de direitos creditórios, caução, penhor, alienação fiduciária, hipoteca ou operação garantida pelo governo \n-seguros e assemelhados: os seguros (e assemelhados) contratados para garantir o pagamento da operação em circunstâncias adversas\n-garantia fidejussória: baseada na fidelidade do garantidor em cumprir as obrigações, caso o devedor não o faça\n-bens arrendados: bem objeto do arrendamento financeiro\n-garantias internacionais: declarar se a garantia é mitigadora ou não, observados os critérios definidos pela Circular 3.644, de 4 de março de 2013 \n-operações garantidas por outras entidade: declarar as garantias prestadas pelas entidades descritas no item 3. Informações de Garantias (i) do documento 3040 - Bacen \n-acordos de compensação: operações que sejam abrangidas por acordos para a compensação e liquidação de obrigações no âmbito do SFN, nos termos da Resolução 3.263, de 24 de fevereiro de 2005\n-não aplicável"
+        enum:
+        - CESSAO_DIREITOS_CREDITORIOS
+        - CAUCAO
+        - PENHOR
+        - ALIENACAO_FIDUCIARIA
+        - HIPOTECA
+        - OPERACOES_GARANTIDAS_PELO_GOVERNO
+        - OUTRAS_GARANTIAS_NAO_FIDEJUSSORIAS
+        - SEGUROS_ASSEMELHADOS
+        - GARANTIA_FIDEJUSSORIA
+        - BENS_ARRENDADOS
+        - GARANTIAS_INTERNACIONAIS
+        - OPERACOES_GARANTIDAS_OUTRAS_ENTIDADES
+        - ACORDOS_COMPENSACAO
+        - NAO_APLICAVEL
+        type: string
+      termsConditions:
+        description: Campo aberto para informar as condições contratuais relativas à Modalidade de Financiamentos para pessoa jurídica informada. Pode ser informada a URL referente ao endereço onde constam as condições informadas. Endereço eletrônico de acesso ao canal.
+        maxLength: 2000
+        pattern: \w*\W*
+        type: string
+      type:
+        description: "Modalidades de empréstimos ofertados para pessoa Natural, conforme Circular 4015-Bacen. Segundo cartilha do Bacen: Empréstimo é um contrato entre o cliente e uma instituição financeira (banco, cooperativa de crédito, caixa econômica) pelo qual o cliente recebe uma quantia em dinheiro que deverá ser devolvida em prazo determinado, acrescida dos juros acertados. Os recursos obtidos no empréstimo não tem destinação específica. \nEmpréstimo-Crédito pessoal consignado -  operações de crédito com retenção de parcela do salário ou benefício do tomador, para o pagamento das prestações do empréstimo – desconto em folha de pagamento – nos termos da legislação em vigor\nEmpréstimo-Home equity - empréstimos pessoa natural, garantidos por hipoteca ou por alienação fiduciária de bens imóveis residenciais, sem vinculação a aquisição de bens\nEmpréstimo-Microcrédito Produtivo Orientado - segundo PNMPO é o crédito concedido para financiamento das atividades produtivas, cuja metodologia será estabelecida em regulamento, observada a preferência do relacionamento direto com os empreendedores, admitido o uso de tecnologias digitais e eletrônicas que possam substituir o contato presencial\nEmpréstimo-Crédito pessoal não consignado -  operações de empréstimos às pessoa natural, sem vinculação com aquisição de bem ou serviço e sem retenção de parcela do salário ou benefício do tomador para o pagamento das prestações do empréstimo\nEmpréstimo-Cheque especial - operações de crédito vinculadas à conta corrente, nas quais determinado limite de crédito é disponibilizado aos clientes para utilização de acordo com suas conveniências, sem necessidade de comunicação prévia à instituição financeira\nEmpréstimo-Conta garantida - operações de crédito rotativo, nas quais determinado limite de crédito é disponibilizado para utilização pelo cliente, através da simples movimentação da conta corrente e/ou solicitação formal à instituição financeira. As operações classificadas nessa modalidade não devem ter data definida para a amortização do saldo devedor, exceto a estabelecida para vigência do contrato"
+        enum:
+        - EMPRESTIMO_CREDITO_PESSOAL_SEM_CONSIGNACAO
+        - EMPRESTIMO_CREDITO_PESSOAL_CONSIGNADO
+        - EMPRESTIMO_HOME_EQUITY
+        - EMPRESTIMO_MICROCREDITO_PRODUTIVO_ORIENTADO
+        - EMPRESTIMO_CHEQUE_ESPECIAL
+        - EMPRESTIMO_CONTA_GARANTIDA
+        type: string
+    required:
+    - type
+    - requiredWarranties
+    - termsConditions
+    type: object
+PersonalUnarrangedAccountOverdraft:
+- names:
+  - PersonalUnarrangedAccountOverdraft
+  schema:
+    properties: {}
+    type: object
+PhoneChannels:
+- names:
+  - PhoneChannels
+  schema:
+    properties:
+      identification:
+        $ref: ./PhoneChannelsIdentification.yaml
+      services:
+        description: Traz a relação de serviços disponbilizados pelo Canal de Atendimento
+        items:
+          $ref: ./PhoneChannelsServices.yaml
+        maxItems: 20
+        minItems: 1
+        type: array
+    type: object
+Phones:
+- names:
+  - BankingAgentsLocationsPhones
+  - BranchesPhones
+  schema:
+    properties:
+      areaCode:
+        description: Número de DDD (Discagem Direta à Distância) do telefone da dependência - se houver. p.ex. '19'
+        maxLength: 2
+        pattern: ^\d{2}$
+        type: string
+      countryCallingCode:
+        description: Número de DDI (Discagem Direta Internacional) para  telefone de acesso ao Canal - se houver. p.ex. '55'
+        maxLength: 4
+        pattern: ^\d{4}$
+        type: string
+      number:
+        description: Número de telefone da dependência - se houver
+        maxLength: 11
+        pattern: ^([0-9]{8,11})$
+        type: string
+      type:
+        description: Identificação do Tipo de telefone da dependência. p.ex.FIXO, MOVEL
+        enum:
+        - FIXO
+        - MOVEL
+        type: string
+    required:
+    - type
+    type: object
+- names:
+  - PhoneChannelsIdentificationPhones
+  schema:
+    description: Lista de telefones do Canal de Atendimento
+    properties:
+      additionalInfo:
+        description: "Mensagem complementar necessária para o agrupamento da identificação do telefone. Exemplos relativos ao prenchimento do agrupmento telefônico: \nDDI '55'; DDD '11', '40044828, 'Para clientes no exterior'\nDDI ' ', DDD ' ', 40044828', \"Para regiões metropolitanas'\nDDI ' ', DDD ' ', 40044828', \"Para demais localidades'"
+        maxLength: 300
+        pattern: \w*\W*
+        type: string
+      areaCode:
+        description: Número de DDD (Discagem Direta à Distância) para  telefone de acesso ao Canal - se houver. p.ex. '19'
+        maxLength: 2
+        pattern: ^\d{2}$|^NA$
+        type: string
+      countryCallingCode:
+        description: Número de DDI (Discagem Direta Internacional) para  telefone de acesso ao Canal - se houver. p.ex. '55'
+        maxLength: 2
+        pattern: ^\d{2}$|^NA$
+        type: string
+      number:
+        description: Número de telefone de acesso ao canal. p.ex:' 4004-4828', '99878-5342', '0800-778-7788'
+        maxLength: 13
+        pattern: ^([0-9]{8,11})$|^NA$
+        type: string
+    required:
+    - countryCallingCode
+    - areaCode
+    - number
+    - additionalInfo
+    type: object
+PostalAddress:
+- names:
+  - SharedAutomatedTellerMachinesPostalAddress
+  - BankingAgentsLocationsPostalAddress
+  - BranchesPostalAddress
+  schema:
+    properties:
+      additionalInfo:
+        description: 'Alguns logradouros ainda necessitam ser especificados por meio de complemento, conforme o exemplo a seguir: ''Loja B'', ''Fundos'', ''Casa 2'', ''Lote C'''
+        maxLength: 30
+        pattern: \w*\W*
+        type: string
+      address:
+        description: 'Deverá trazer o endereço completo referente à localização do Terminal de Autoatendimento Compartilhado informado:
+
+          Tipo de logradouro + Nome do logradouro + Número do Logradouro (se não existir usar '' s/n'') + complemento (se houver), como, p.ex.:
+
+          ''R Diamantina, 59, bloco 35''
+
+          ''Praça da Boa Vontade s/n'''
+        maxLength: 150
+        pattern: \w*\W*
+        type: string
+      country:
+        description: Nome do país. p.ex. Brasil
+        maxLength: 80
+        pattern: \w*\W*
+        type: string
+      countryCode:
+        description: Código do pais de acordo com o código “alpha3” do ISO-3166.p.ex.'BRA'
+        enum:
+        - BRA
+        type: string
+      countrySubDivision:
+        description: Enumeração referente a cada sigla da unidade da federação que identifica o estado ou o distrito federal, no qual o endereço está localizado. p.ex. 'AC'. São consideradas apenas as siglas para os estados brasileiros
+        enum:
+        - AC
+        - AL
+        - AM
+        - AP
+        - BA
+        - CE
+        - DF
+        - ES
+        - GO
+        - MA
+        - MG
+        - MS
+        - MT
+        - PA
+        - PB
+        - PE
+        - PI
+        - PR
+        - RJ
+        - RN
+        - RO
+        - RR
+        - RS
+        - SC
+        - SE
+        - SP
+        - TO
+        type: string
+      districtName:
+        description: 'Bairro é uma comunidade ou região localizada em uma cidade ou município de acordo com as suas subdivisões geográficas. p.ex.: ''Paraíso'''
+        maxLength: 50
+        pattern: \w*\W*
+        type: string
+      geographicCoordinates:
+        $ref: ./SharedAutomatedTellerMachinesPostalAddressGeographicCoordinates.yaml
+      ibgeCode:
+        description: Código IBGE de Município. A Tabela de Códigos de Municípios do IBGE apresenta a lista dos municípios brasileiros associados a um código composto de 7 dígitos, sendo os dois primeiros referentes ao código da Unidade da Federação. p.ex.'3550308'
+        maxLength: 7
+        pattern: \d{7}$
+        type: string
+      postCode:
+        description: 'Código de Endereçamento Postal: Composto por um conjunto numérico de oito dígitos, o objetivo principal do CEP é orientar e acelerar o encaminhamento, o tratamento e a entrega de objetos postados nos Correios, por meio da sua atribuição a localidades, logradouros, unidades dos Correios, serviços, órgãos públicos, empresas e edifícios. p.ex. ''01311000'''
+        maxLength: 8
+        pattern: (\d{8})
+        type: string
+      townName:
+        description: 'Localidade: O nome da localidade corresponde à designação
+
+          da cidade ou município no qual o endereço está localizado. p.ex. ''São Paulo'''
+        maxLength: 50
+        pattern: \w*\W*
+        type: string
+    type: object
+Prices:
+- names:
+  - BusinessAccountsFeesServicesPrices
+  - BusinessCreditCardsFeesServicesPrices
+  - BusinessFinancingsFeesServicesPrices
+  - BusinessInvoiceFinancingsFeesServicesPrices
+  - BusinessLoansFeesServicesPrices
+  - BusinessUnarrangedAccountOverdraftFeesServicesPrices
+  - PersonalAccountsFeesPriorityServicesPrices
+  - PersonalAccountsFeesOtherServicesPrices
+  - PersonalCreditCardsFeesServicesPrices
+  - PersonalFinancingsFeesServicesPrices
+  - PersonalInvoiceFinancingsFeesServicesPrices
+  - PersonalLoansFeesServicesPrices
+  schema:
+    description: Lista distribuição preços tarifas de serviços
+    properties:
+      currency:
+        description: Moeda referente ao valor da Tarifa, segundo modelo ISO-4217. p.ex. 'BRL'
+        enum:
+        - moeda (ISO-4217)
+        maxLength: 3
+        type: string
+      customers:
+        $ref: ./BusinessAccountsFeesServicesPricesCustomers.yaml
+      interval:
+        description: 'Segundo Normativa nº 32, BCB, de 2020: Distribuição de frequência relativa dos valores de tarifas cobradas dos clientes, de que trata o § 2º do art. 3º da Circular nº 4.015, de 2020, deve dar-se com base em quatro faixas de igual tamanho, com explicitação dos valores sobre a mediana em cada uma dessas faixas. Informando: 1ª faixa, 2ª faixa , 3ª faixa e 4ª faixa'
+        enum:
+        - 1_FAIXA
+        - 2_FAIXA
+        - 3_FAIXA
+        - 4_FAIXA
+        type: string
+      value:
+        description: 'Valor da mediana de cada faixa relativa ao serviço ofertado, informado no período, conforme Res nº 32 BCB, 2020. p.ex. ''45.00''
+
+          (representa um valor monetário. p.ex: 1547368.92. Este valor, considerando que a moeda seja BRL, significa R$ 1.547.368,92. O único separador presente deve ser o ''.'' (ponto) para indicar a casa decimal. Não deve haver separador de milhar)'
+        maxLength: 12
+        pattern: ^((\d{1,9}\.\d{2}){1}|NA)$  
+        type: string
+    required:
+    - interval
+    - value
+    - currency
+    type: object
+- names:
+  - BusinessAccountsServiceBundlesPrices
+  - PersonalAccountsServiceBundlesPrices
+  schema:
+    description: Lista distribuição preços tarifas de serviços
+    properties:
+      currency:
+        description: Moeda referente ao valor da Tarifa, segundo modelo ISO-4217. p.ex. 'BRL'
+        enum:
+        - moeda (ISO-4217)
+        maxLength: 3
+        type: string
+      customers:
+        $ref: ./BusinessAccountsServiceBundlesPricesCustomers.yaml
+      interval:
+        description: 'Segundo Normativa nº 32, BCB, de 2020: Distribuição de frequência relativa dos valores de tarifas cobradas dos clientes, de que trata o § 2º do art. 3º da Circular nº 4.015, de 2020, deve dar-se com base em quatro faixas de igual tamanho, com explicitação dos valores sobre a mediana em cada uma dessas faixas. Informando: 1ª faixa , 2ª faixa, 3ª faixa e 4ª faixa'
+        enum:
+        - 1_FAIXA
+        - 2_FAIXA
+        - 3_FAIXA
+        - 4_FAIXA
+        type: string
+      monthlyFee:
+        description: 'Valor da mediana de cada faixa relativa ao serviço ofertado, informado no período, conforme Res nº 32 BCB, 2020. p.ex. ''45.00''
+
+          (representa um valor monetário. p.ex: 1547368.92. Este valor, considerando que a moeda seja BRL, significa R$ 1.547.368,92. O único separador presente deve ser o ''.'' (ponto) para indicar a casa decimal. Não deve haver separador de milhar)'
+        maxLength: 12
+        pattern: ^((\d{1,9}\.\d{2}){1}|NA)$  
+        type: string
+    required:
+    - interval
+    - monthlyFee
+    - currency
+    type: object
+PriorityServices:
+- names:
+  - PersonalAccountsFeesPriorityServices
+  schema:
+    description: Lista das Tarifas cobradas sobre Serviços Prioritários
+    properties:
+      chargingTriggerInfo:
+        description: Fatos geradores de cobrança que incidem sobre os serviços prioritários, segundo Resolução 3.919 do Bacen, para pessoa natural. p.ex. 'Fornecimento de extrato com a movimentação de um período em guichê de caixa ou por outras formas de atendimento pessoal, tal como atendimento telefônico realizado por atendente.'
+        maxLength: 2000
+        pattern: \w*\W*
+        type: string
+      code:
+        description: Lista das Siglas de identificação do Serviço Prioritário, segundo Resolução 3.919 do Bacen. Vide Enum
+        enum:
+        - CADASTRO
+        - 2_VIA_CARTAO_DEBITO
+        - 2_VIA_CARTAO_POUPANCA
+        - EXCLUSAO_CCF
+        - SUSTACAO_REVOGACAO
+        - FOLHA_CHEQUE
+        - CHEQUE_ADMINISTRATIVO
+        - CHEQUE_VISADO
+        - SAQUE_PESSOAL
+        - SAQUE_TERMINAL
+        - SAQUE_CORRESPONDENTE
+        - DEPOSITO_IDENTIFICADO
+        - EXTRATO_MES_P
+        - EXTRATO_MES_E
+        - EXTRATO_MES_C
+        - EXTRATO_MOVIMENTO_P
+        - EXTRATO_MOVIMENTO_E
+        - EXTRATO_MOVIMENTO_C
+        - MICROFILME
+        - DOC_PESSOAL
+        - DOC_ELETRONICO
+        - DOC_INTERNET
+        - TED_PESSOAL
+        - TED_ELETRONICO
+        - TED_INTERNET
+        - DOC_TED_AGENDADO_P
+        - DOC_TED_AGENDADO_E
+        - DOC_TED_AGENDADO_I
+        - TRANSF_RECURSO_P
+        - TRANSF_RECURSO_E
+        - ORDEM_PAGAMENTO
+        - ANUIDADE_NACIONAL
+        - ANUIDADE_INTERNACIONAL
+        - ANUIDADE_DIFERENCIADA
+        - SAQUE_CARTAO_BRASIL
+        - SAQUE_CARTAO_EXTERIOR
+        - AVALIACAO_EMERGENCIAL_CREDITO
+        - EMISSAO_SEGUNDA_VIA
+        - TARIFA_PAGAMENTO_CONTAS
+        - SMS
+        type: string
+      maximum:
+        $ref: ./PersonalAccountsFeesPriorityServicesMaximum.yaml
+      minimum:
+        $ref: ./PersonalAccountsFeesPriorityServicesMinimum.yaml
+      name:
+        description: Nome dos Serviços prioritários, segundo Resolução 3.919 do Bacen, para pessoa natural. (vide Enum)
+        enum:
+        - CONFECCAO_CADASTRO_INICIO_RELACIONAMENTO
+        - FORNECIMENTO_2_VIA_CARTAO_FUNCAO_DEBITO
+        - FORNECIMENTO_2_VIA_CARTAO_FUNCAO_MOVIMENTACAO_CONTA_POUPANCA
+        - EXCLUSAO_CADASTRO_EMITENTES_CHEQUES_SEM_FUNDO_CCF
+        - CONTRA_ORDEM_REVOGACAO_E_OPOSICAO_OU_SUSTACAO_PAGAMENTO_CHEQUE
+        - FORNECIMENTO_FOLHAS_CHEQUE
+        - CHEQUE_ADMINISTRATIVO
+        - CHEQUE_VISADO
+        - SAQUE_CONTA_DEPOSITO_A_VISTA_POUPANCA_PRESENCIAL_OU_PESSOAL
+        - SAQUE_CONTA_DEPOSITO_A_VISTA_POUPANCA_TERMINAL_AUTOATENDIMENTO
+        - SAQUE_CONTA_DEPOSITO_A_VISTA_POUPANCA_CORRESPONDENTES_PAIS
+        - DEPOSITO_IDENTIFICADO
+        - FORNECIMENTO_EXTRATO_MENSAL_CONTA_DEPOSITOS_A_VISTA_E_POUPANCA_PRESENCIAL_OU_PESSOAL
+        - FORNECIMENTO_EXTRATO_MENSAL_CONTA_DEPOSITOS_A_VISTA_E_POUPANCA_TERMINAL_AUTOATENDIMENTO
+        - FORNECIMENTO_EXTRATO_MENSAL_CONTA_DEPOSITOS_A_VISTA_E_POUPANCA_CORRESPONDENTES_PAIS
+        - FORNECIMENTO_EXTRATO_DE_UM_PERIODO_CONTA_DEPOSITOS_A_VISTA_E_POUPANCA_PRESENCIAL_OU_PESSOAL
+        - FORNECIMENTO_EXTRATO_DE_UM_PERIODO_CONTA_DEPOSITOS_A_VISTA_E_POUPANCA_TERMINAL_AUTOATENDIMENTO
+        - FORNECIMENTO_EXTRATO_DE_UM_PERIODO_CONTA_DEPOSITOS_A_VISTA_E_POUPANCA_CORRESPONDENTES_PAIS
+        - FORNECIMENTO_COPIA_MICROFILME_MICROFICHA_ASSEMELHADO
+        - TRANSFERENCIA_DOC_PESSOAL_OU_PRESENCIAL
+        - TRANSFERENCIA_DOC_TERMINAL_AUTOATENDIMENTO_OUTROS_MEIOS_ELETRONICOS
+        - TRANSFERENCIA_DOC_INTERNET
+        - TRANSFERENCIA_TED_PESSOAL_OU_PRESENCIAL
+        - TRANSFERENCIA_TED_TERMINAL_AUTOATENDIMENTO_OUTROS_MEIOS_ELETRONICOS
+        - TRANSFERENCIA_TED_INTERNET
+        - TRANSFERENCIA_DOC_TED_PESSOAL_OU_PRESENCIAL
+        - TRANSFERENCIA_DOC_TED_TERMINAL_AUTOATENDIMENTO_OUTROS_MEIOS_ELETRONICOS
+        - TRANSFERENCIA_DOC_TED_INTERNET
+        - TRANSFERENCIA_ENTRE_CONTAS_PROPRIA_INSTITUICAO_PESSOAL_OU_PRESENCIAL
+        - TRANSFERENCIA_ENTRE_CONTAS_PROPRIA_INSTITUICAO_TERMINAL_AUTOATENDIMENTO_OUTROS_MEIOS_ELETRONICOS_INCLUSIVE_INTERNET
+        - ORDEM_PAGAMENTO
+        - ANUIDADE_CARTAO_BASICO_NACIONAL
+        - ANUIDADE_CARTAO_BASICO_INTERNACIONAL
+        - ANUIDADE_DIFERENCIADA
+        - UTILIZACAO_CANAIS_ATENDIMENTO_RETIRADA_ESPECIE_BRASIL
+        - UTILIZACAO_CANAIS_ATENDIMENTO_RETIRADA_ESPECIE_EXTERIOR
+        - AVALIACAO_EMERGENCIAL_CREDITO
+        - FORNECIMENTO_SEGUNDA_VIA_FUNCAO_CREDITO
+        - PAGAMENTO_CONTAS_UTILIZANDO_FUNCAO_CREDITO
+        - SMS
+        type: string
+      prices:
+        description: Lista distribuição preços tarifas de serviços
+        items:
+          $ref: ./PersonalAccountsFeesPriorityServicesPrices.yaml
+        maxItems: 4
+        minItems: 4
+        type: array
+    required:
+    - name
+    - code
+    - chargingTriggerInfo
+    type: object
+Product:
+- names:
+  - BusinessCreditCardsIdentificationProduct
+  - PersonalCreditCardsIdentificationProduct
+  schema:
+    properties:
+      additionalInfo:
+        description: Informações complementares se tipo de Cartão 'OUTROS'
+        maxLength: 50
+        pattern: \w*\W*
+        type: string
+      type:
+        description: 'Categoria atribuída a um cartão de pagamento, sob uma certa denominação, que lhe agrega um conjunto de vantagens, diferenciando-o de acordo com o perfil do portador. p.ex. ''Classic Nacional'', ''Classic Internacional''
+
+          Essa categoria é definida pelo BACEN e está contida no documento de nome ''Elaboração e Remessa de Informações Relativas aos Cartões de Pagamento Emissores'''
+        enum:
+        - CLASSIC_NACIONAL
+        - CLASSIC_INTERNACIONAL
+        - GOLD
+        - PLATINUM
+        - INFINITE
+        - ELECTRON
+        - STANDARD_NACIONAL
+        - STANDARD_INTERNACIONAL
+        - ELETRONIC
+        - BLACK
+        - REDESHOP
+        - MAESTRO_MASTERCARD_MAESTRO
+        - GREEN
+        - BLUE
+        - BLUEBOX
+        - PROFISSIONAL_LIBERAL
+        - CHEQUE_ELETRONICO
+        - CORPORATIVO
+        - EMPRESARIAL
+        - COMPRAS
+        - OUTROS
+        type: string
+    required:
+    - type
+    type: object
+Rates:
+- names:
+  - BusinessCreditCardsInterestRates
+  schema:
+    description: Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequência das taxas de juros remuneratórios do Crédito Rotativo
+    properties:
+      applications:
+        description: 'Lista  das faixas de cobrança da taxa efetiva aplicada pela contratação de crédito
+
+          rotativo'
+        items:
+          $ref: ./BusinessCreditCardsInterestRatesApplications.yaml
+        maxItems: 4
+        minItems: 4
+        type: array
+      maximumRate:
+        description: 'Percentual máximo cobrado (taxa efetiva) no mês de referência, pela utilização do crédito rotativo
+
+          (A apuração deve pode ser feita com até 4 casas decimais. A representação de porcentagem p.ex: do 0.1500 representa 15%. Desta forma, o valor 1 representa 100%)'
+        maxLength: 6
+        pattern: (^[0-9](\.[0-9]{4})$|^NA$)
+        type: string
+      minimumRate:
+        description: 'Percentual mínimo cobrado (taxa efetiva) no mês de referência, pela utilização do crédito rotativo
+
+          (A apuração deve pode ser feita com até 4 casas decimais. A representação de porcentagem p.ex: do 0.1500 representa 15%. Desta forma, o valor 1 representa 100%)'
+        maxLength: 6
+        pattern: (^[0-9](\.[0-9]{4})$|^NA$)
+        type: string
+      rate:
+        description: "Percentual que incide sobre a composição das taxas de juros remuneratórios pela utilização do crédito rotativo. \n(representa uma porcentagem Ex: 0.15 (O valor ao lado representa 15%. O valor '1 'representa 100%)\nA apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros\n(representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)"
+        maxLength: 4
+        pattern: '^((\d{1,9}\.\d{2}){1}|NA)$ '
+        type: string
+      referentialRateIndexer:
+        description: 'Tipos de taxas referenciais ou indexadores, conforme Anexo 5: Taxa referencial ou Indexador (Indx), do Documento 3040, que incide sobre a utilização do crédito rotativo'
+        enum:
+        - SEM_INDEXADOR_TAXA
+        - PRE_FIXADO
+        - POS_FIXADO_TR_TBF
+        - POS_FIXADO_TJLP
+        - POS_FIXADO_LIBOR
+        - POS_FIXADO_TLP
+        - OUTRAS_TAXAS_POS_FIXADAS
+        - FLUTUANTES_CDI
+        - FLUTUANTES_SELIC
+        - OUTRAS_TAXAS_FLUTUANTES
+        - INDICES_PRECOS_IGPM
+        - INDICES_PRECOS_IPCA
+        - INDICES_PRECOS_IPCC
+        - OUTROS_INDICES_PRECO
+        - CREDITO_RURAL_TCR_PRE
+        - CREDITO_RURAL_TCR_POS
+        - CREDITO_RURAL_TRFC_PRE
+        - CREDITO_RURAL_TRFC_POS
+        - OUTROS_INDEXADORES
+        type: string
+    required:
+    - referentialRateIndexer
+    - rate
+    - minimumRate
+    - maximumRate
+    type: object
+- names:
+  - PersonalCreditCardsInterestRates
+  schema:
+    description: Lista da representação que traz o conjunto de informações necessárias para demonstrar a distribuição de frequência das taxas de juros remuneratórios para crédito rotativo
+    properties:
+      applications:
+        description: Lista distribuição percentuais relativos à taxa de juros remuneratórios
+        items:
+          $ref: ./PersonalCreditCardsInterestRatesApplications.yaml
+        maxItems: 4
+        minItems: 4
+        type: array
+      maximum:
+        $ref: ./PersonalCreditCardsInterestRatesMaximum.yaml
+      minimum:
+        $ref: ./PersonalCreditCardsInterestRatesMinimum.yaml
+      rate:
+        description: "Percentual que incide sobre a composição das taxas de juros remuneratórios pela utilização do crédito rotativo. \n(representa uma porcentagem Ex: 0.15 (O valor ao lado representa 15%. O valor '1 'representa 100%)\nA apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros\n(representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)"
+        maxLength: 4
+        pattern: ^((\d{1,9}\.\d{2}){1}|NA)$
+        type: string
+      referentialRateIndexer:
+        description: 'Tipos de taxas referenciais ou indexadores, conforme Anexo 5: Taxa referencial ou Indexador (Indx), do Documento 3040, que incide sobre a utilização do crédito rotativo'
+        enum:
+        - SEM_INDEXADOR_TAXA
+        - PRE_FIXADO
+        - POS_FIXADO_TR_TBF
+        - POS_FIXADO_TJLP
+        - POS_FIXADO_LIBOR
+        - POS_FIXADO_TLP
+        - OUTRAS_TAXAS_POS_FIXADAS
+        - FLUTUANTES_CDI
+        - FLUTUANTES_SELIC
+        - OUTRAS_TAXAS_FLUTUANTES
+        - INDICES_PRECOS_IGPM
+        - INDICES_PRECOS_IPCA
+        - INDICES_PRECOS_IPCC
+        - OUTROS_INDICES_PRECO
+        - CREDITO_RURAL_TCR_PRE
+        - CREDITO_RURAL_TCR_POS
+        - CREDITO_RURAL_TRFC_PRE
+        - CREDITO_RURAL_TRFC_POS
+        - OUTROS_INDEXADORES
+        type: string
+    required:
+    - referentialRateIndexer
+    - rate
+    type: object
+RewardsProgram:
+- names:
+  - BusinessCreditCardsRewardsProgram
+  - PersonalCreditCardsRewardsProgram
+  schema:
+    properties:
+      hasRewardProgram:
+        description: "Indicador da existência de programa de fidelidade/recompensa associado à conta de pagamento pós-paga (cartão)\n true\nfalse"
+        enum:
+        - 'true'
+        - 'false'
+        type: string
+      rewardProgramInfo:
+        description: Informações de Termos e condições do programa de fidelidade/recompensa. Pode ser informada a URL referente ao endereço onde constam as condições informadas. URLs são limitadas a 2048 caracteres mas, para o contexto do Sistema Financeiro aberto, será adotado a metade deste tamanho. p.ex. 'https://example.com/mobile-banking'
+        maxLength: 2000
+        pattern: \w*\W*
+        type: string
+    required:
+    - hasRewardProgram
+    type: object
+Service:
+- names:
+  - BranchesService
+  schema:
+    properties:
+      additionalInfo:
+        description: Texto livre para complementar informação relativa ao Serviço disponível, quando for selecionada a opção 'OUTROS_PRODUTOS_SERVICOS'
+        maxLength: 2000
+        pattern: \w*\W*
+        type: string
+    type: object
+ServiceBundles:
+- names:
+  - BusinessAccountsServiceBundles
+  - PersonalAccountsServiceBundles
+  schema:
+    description: Lista dos serviços que compõe o pacote de serviços
+    properties:
+      maximum:
+        $ref: ./BusinessAccountsServiceBundlesMaximum.yaml
+      minimum:
+        $ref: ./BusinessAccountsServiceBundlesMinimum.yaml
+      name:
+        description: Nome do Pacote de Serviços disponibilizado pela instituição
+        maxLength: 250
+        pattern: \w*\W*
+        type: string
+      prices:
+        description: Lista distribuição preços tarifas de serviços
+        items:
+          $ref: ./BusinessAccountsServiceBundlesPrices.yaml
+        maxItems: 4
+        minItems: 4
+        type: array
+      services:
+        description: Lista dos serviços que compõem o Pacote de Serviços
+        items:
+          $ref: ./BusinessAccountsServiceBundlesServices.yaml
+        minItems: 1
+        type: array
+    required:
+    - name
+    type: object
+Services:
+- names:
+  - SharedAutomatedTellerMachinesServices
+  - BankingAgentsServices
+  schema:
+    description: Traz a relação de serviços disponbilizados pelo Terminal de Autoatendimento Compartilhado
+    properties:
+      additionalInfo:
+        description: Texto livre para complementar informação relativa ao Serviço disponível, quando for selecionada a opção 'OUTROS_PRODUTOS_SERVICOS'
+        maxLength: 2000
+        pattern: \w*\W*
+        type: string
+      code:
+        description: 'Código dos Serviços efetivamente prestados pelo Canal de Atendimento:
+
+          ABRE_CONTA_DEPOSITO_OU_PRE_PAGA
+
+          SAQUE_MOEDA_ESPECIE
+
+          RECEBE_PAGA_QUALQUER_NATUREZA
+
+          TRANSFERENCIAS_ELETRONICAS_MOVIMENTA_CONTAS_DEPOSITOS_OU_PAGA_TITULARES_CLIENTES
+
+          CONSULTA_SALDOS_EXTRATOS_CONTAS_DEPOSITOS_
+
+          PAGAMENTOS
+
+          APLICA_RESGATA_INVESTIMENTOS
+
+          EXECUTA_ATIVA_PASSIVA_ORDENS_PAGAMENTO
+
+          DEPOSITA_MOEDA_ESPECIE_CHEQUE
+
+          OPERA_CREDITO_OUTROS_SERVICOS_ACOMPANHA_OPERACAO
+
+          CARTAO_CREDITO
+
+          SEGUROS
+
+          OPERA_ARRENDAMENTO_MERCANTIL
+
+          ABERTURA_CONTA_PAGAMENTO_POS_PAGA
+
+          COMPRA_VENDE_MOEDA_ESTRANGEIRA_ESPECIE
+
+          COMPRA_VENDE_CHEQUE_CHEQUE_VIAGEM_CARGA_MOEDA_ESTRANGEIRA_CARTAO_PRE_PAGO
+
+          COMPRA_VENDE_OURO
+
+          CANCELAMENTO
+
+          INFORMACOES
+
+          RECLAMACOES
+
+          OUTROS_PRODUTOS_SERVICOS'
+        enum:
+        - ABRE_CONTA_DEPOSITO_OU_PRE_PAGA
+        - SAQUE_MOEDA_ESPECIE
+        - RECEBE_PAGA_QUALQUER_NATUREZA
+        - TRANSFERENCIAS_ELETRONICAS_MOVIMENTA_CONTAS_DEPOSITOS_OU_PAGA_TITULARES_CLIENTES
+        - CONSULTA_SALDOS_EXTRATOS_CONTAS_DEPOSITOS_
+        - PAGAMENTOS
+        - APLICA_RESGATA_INVESTIMENTOS
+        - EXECUTA_ATIVA_PASSIVA_ORDENS_PAGAMENTO
+        - DEPOSITA_MOEDA_ESPECIE_CHEQUE
+        - OPERA_CREDITO_OUTROS_SERVICOS_ACOMPANHA_OPERACAO
+        - CARTAO_CREDITO
+        - SEGUROS
+        - OPERA_ARRENDAMENTO_MERCANTIL
+        - ABERTURA_CONTA_PAGAMENTO_POS_PAGA
+        - COMPRA_VENDE_MOEDA_ESTRANGEIRA_ESPECIE
+        - COMPRA_VENDE_CHEQUE_CHEQUE_VIAGEM_CARGA_MOEDA_ESTRANGEIRA_CARTAO_PRE_PAGO
+        - COMPRA_VENDE_OURO
+        - CANCELAMENTO
+        - INFORMACOES
+        - RECLAMACOES
+        - OUTROS_PRODUTOS_SERVICOS
+        type: string
+      name:
+        description: 'Nome dos Serviços efetivamente prestados pelo Canal de Atendimento, discriminados na Seção 4.2 daResolução nº 35, BCB, 2020:
+
+          ''ABERTURA_CONTAS_DEPOSITOS_OU_PAGAMENTO_PRE_PAGA
+
+          SAQUE_MOEDA_EM_ESPECIE
+
+          RECEBIMENTOS_PAGAMENTOS_QUALQUER_NATUREZA
+
+          TRANSFERENCIAS_ELETRONICAS_VISANDO_MOVIMENTACAO_
+
+          CONTAS_DEPOSITOS_OU_PAGAMENTO_TITULARIDADE_CLIENTES
+
+          CONSULTA_SALDOS_EXTRATOS_CONTAS_DEPOSITOS_E_CONTAS_
+
+          PAGAMENTOS
+
+          APLICACOES_RESGATES_INVESTIMENTOS
+
+          EXECUCAO_ATIVA_PASSIVA_ORDENS_PAGAMENTO_SOLICITACAO_
+
+          CLIENTES_USUARIOS
+
+          DEPOSITOS_MOEDA_ESPECIE_CHEQUE
+
+          OPERACOES_CREDITO_BEM_COMO_OUTROS_SERVICOS_PRESTADOS_ACOMPANHAMENTO_OPERACAO
+
+          CARTAO_CREDITO
+
+          SEGUROS
+
+          OPERACOES_ARRENDAMENTO_MERCANTIL
+
+          ABERTURA_CONTA_PAGAMENTO_POS_PAGA
+
+          COMPRA_VENDA_MOEDA_ESTRANGEIRA_ESPECIE
+
+          COMPRA_VENDA_CHEQUE_CHEQUE_VIAGEM_BEM_COMO_CARGA_MOEDA_ESTRANGEIRA_CARTAO_PRE_PAGO
+
+          COMPRA_VENDA_OURO
+
+          OUTROS_PRODUTOS_SERVICOS
+
+          CANCELAMENTO
+
+          INFORMACOES
+
+          RECLAMACOES'
+        enum:
+        - ABERTURA_CONTAS_DEPOSITOS_OU_PAGAMENTO_PRE_PAGA
+        - SAQUE_MOEDA_EM_ESPECIE
+        - RECEBIMENTOS_PAGAMENTOS_QUALQUER_NATUREZA
+        - TRANSFERENCIAS_ELETRONICAS_VISANDO_MOVIMENTACAO_
+        - CONTAS_DEPOSITOS_OU_PAGAMENTO_TITULARIDADE_CLIENTES
+        - CONSULTA_SALDOS_EXTRATOS_CONTAS_DEPOSITOS_E_CONTAS_
+        - PAGAMENTOS
+        - APLICACOES_RESGATES_INVESTIMENTOS
+        - EXECUCAO_ATIVA_PASSIVA_ORDENS_PAGAMENTO_SOLICITACAO_
+        - CLIENTES_USUARIOS
+        - DEPOSITOS_MOEDA_ESPECIE_CHEQUE
+        - OPERACOES_CREDITO_BEM_COMO_OUTROS_SERVICOS_PRESTADOS_ACOMPANHAMENTO_OPERACAO
+        - CARTAO_CREDITO
+        - SEGUROS
+        - OPERACOES_ARRENDAMENTO_MERCANTIL
+        - ABERTURA_CONTA_PAGAMENTO_POS_PAGA
+        - COMPRA_VENDA_MOEDA_ESTRANGEIRA_ESPECIE
+        - COMPRA_VENDA_CHEQUE_CHEQUE_VIAGEM_BEM_COMO_CARGA_MOEDA_ESTRANGEIRA_CARTAO_PRE_PAGO
+        - COMPRA_VENDA_OURO
+        - CANCELAMENTO
+        - INFORMACOES
+        - RECLAMACOES
+        - OUTROS_PRODUTOS_SERVICOS
+        type: string
+    type: object
+- names:
+  - BranchesServices
+  schema:
+    description: Traz a relação de serviços disponbilizados pelo Canal de Atendimento
+    properties:
+      code:
+        description: Código dos Serviços efetivamente prestados pelo Canal de Atendimento (Vide Enum)
+        enum:
+        - ABRE_CONTA_DEPOSITO_OU_PRE_PAGA
+        - SAQUE_MOEDA_ESPECIE
+        - RECEBE_PAGA_QUALQUER_NATUREZA
+        - TRANSFERENCIAS_ELETRONICAS_MOVIMENTA_CONTAS_DEPOSITOS_OU_PAGTO_TITULARES_CLIENTES
+        - CONSULTA_SALDOS_EXTRATOS_CONTAS_DEPOSITOS_PAGTOS
+        - APLICA_RESGATA_INVESTIMENTOS
+        - EXECUCAO_ATIVA_PASSIVA_ORDENS_PAGTO
+        - DEPOSITO_MOEDA_ESPECIE_CHEQUE
+        - OPERA_CREDITO_OUTROS_SERVICOS_ACOMPANHA_OPERACAO
+        - CARTAO_CREDITO
+        - SEGUROS
+        - OPERA_ARRENDAMENTO_MERCANTIL
+        - ABERTURA_CONTA_PAGAMENTO_POS_PAGA
+        - COMPRA_VENDA_MOEDA_ESTRANGEIRA_ESPECIE
+        - COMPRA_VENDA_CHEQUE_CHEQUE_VIAGEM_CARGA_MOEDA_ESTRANGEIRA_CARTAO_PRE_PAGO
+        - COMPRA_VENDA_OURO
+        - OUTROS_PRODUTOS_SERVICOS
+        - CANCELAMENTO
+        - INFORMACOES
+        - RECLAMACOES
+        type: string
+      name:
+        description: Nome dos Serviços efetivamente prestados pelo Canal de Atendimento, discriminados na Seção 4.2 daResolução nº 35, BCB, 2020 (Vide Enum)
+        enum:
+        - ABERTURA_CONTAS_DEPOSITOS_OU_PAGAMENTO_PRE_PAGA
+        - SAQUE_MOEDA_EM_ESPECIE
+        - RECEBIMENTOS_PAGAMENTOS_QUALQUER_NATUREZA
+        - TRANSFERENCIAS_ELETRONICAS_VISANDO_MOVIMENTACAO_CONTAS_DEPOSITOS_OU_PAGAMENTO_TITULARIDADE_CLIENTES
+        - CONSULTA_SALDOS_EXTRATOS_CONTAS_DEPOSITOS_CONTAS_PAGAMENTOS
+        - APLICACOES_RESGATES_INVESTIMENTOS
+        - EXECUCAO_ATIVA_PASSIVA_ORDENS_PAGAMENTO_SOLICITACAO_CLIENTES_USUARIOS
+        - DEPOSITOS_MOEDA_ESPECIE_CHEQUE
+        - OPERACOES_CREDITO_BEM_COMO_OUTROS_SERVICOS_PRESTADOS_ACOMPANHAMENTO_OPERACAO
+        - CARTAO_CREDITO
+        - SEGUROS
+        - OPERACOES_ARRENDAMENTO_MERCANTIL
+        - ABERTURA_CONTA_PAGAMENTO_POS_PAGA
+        - COMPRA_VENDA_MOEDA_ESTRANGEIRA_ESPECIE
+        - COMPRA_VENDA_CHEQUE_CHEQUE_VIAGEM_BEM_COMO_CARGA_MOEDA_ESTRANGEIRA_CARTAO_PRE_PAGO
+        - COMPRA_VENDA_OURO
+        - OUTROS_PRODUTOS_SERVICOS
+        - CANCELAMENTO
+        - INFORMACOES
+        - RECLAMACOES
+        type: string
+    required:
+    - name
+    - code
+    type: object
+- names:
+  - BusinessAccountsFeesServices
+  - BusinessCreditCardsFeesServices
+  - BusinessFinancingsFeesServices
+  - BusinessInvoiceFinancingsFeesServices
+  - BusinessLoansFeesServices
+  - BusinessUnarrangedAccountOverdraftFeesServices
+  - PersonalCreditCardsFeesServices
+  - PersonalFinancingsFeesServices
+  - PersonalLoansFeesServices
+  schema:
+    description: Lista das Tarifas cobradas sobre Serviços
+    properties:
+      chargingTriggerInfo:
+        description: Fatos geradores de cobrança que incide sobre  serviços para pessoa jurídica. (Campo Livre)
+        maxLength: 2000
+        pattern: \w*\W*
+        type: string
+      code:
+        description: ' Siglas de identificação do Serviço (Campo Livre)'
+        maxLength: 100
+        type: string
+      maximum:
+        $ref: ./BusinessAccountsFeesServicesMaximum.yaml
+      minimum:
+        $ref: ./BusinessAccountsFeesServicesMinimum.yaml
+      name:
+        description: Nome do Serviço que incide sobre tipo de conta selecionado para pessoa jurídica(Campo Livre)
+        maxLength: 250
+        pattern: \w*\W*
+        type: string
+      prices:
+        description: Lista distribuição preços tarifas de serviços
+        items:
+          $ref: ./BusinessAccountsFeesServicesPrices.yaml
+        maxItems: 4
+        minItems: 4
+        type: array
+    required:
+    - name
+    - code
+    - chargingTriggerInfo
+    type: object
+- names:
+  - BusinessAccountsServiceBundlesServices
+  - PersonalAccountsServiceBundlesServices
+  schema:
+    description: Lista dos serviços que compõem o Pacote de Serviços
+    properties:
+      chargingTriggerInfo:
+        description: Fatos geradores de cobrança que incidem sobre serviço que compõe o Pacote de Serviços
+        maxLength: 2000
+        pattern: \w*\W*
+        type: string
+      code:
+        description: Código que identifica o Serviço que compõe o Pacote de Serviços
+        maxLength: 100
+        pattern: \w*\W*
+        type: string
+      eventLimitQuantity:
+        description: 'Segundo Resolução  4196, BCB, de 2013: Quantidade de eventos previstos no Pacote de Serviços (Número de eventos incluídos no mês) p.ex.''2''. No caso de quantidade ilimitada, reportar 999999'
+        maxLength: 6
+        pattern: ^(\d{1,6}){1}$
+        type: string
+      freeEventQuantity:
+        description: 'Segundo Resolução  4196, BCB, de 2013: Quantidade de eventos previstos no Pacote de Serviços com isenção de Tarifa.p.ex.''1''  No caso de quantidade ilimitada, reportar 999999'
+        maxLength: 6
+        pattern: ^(\d{1,6}){1}$
+        type: string
+    required:
+    - code
+    - chargingTriggerInfo
+    - eventLimitQuantity
+    - freeEventQuantity
+    type: object
+- names:
+  - PersonalInvoiceFinancingsFeesServices
+  schema:
+    description: Lista das Tarifas cobradas sobre Serviços
+    properties:
+      chargingTriggerInfo:
+        description: Fatos geradores de cobrança que incidem sobre as Modalidades de Financiamentos informada, para pessoa natural.(Campo Livre)
+        maxLength: 2000
+        pattern: \w*\W*
+        type: string
+      code:
+        description: Sigla de identificação do serviço relacionado à Modalidade de Financiamentos informada, para pessoa natural.(Campo Livre).
+        maxLength: 100
+        pattern: \w*\W*
+        type: string
+      currency:
+        description: Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217. p.ex.'BRL'
+        enum:
+        - moeda (ISO-4217)
+        maxLength: 3
+        type: string
+      name:
+        description: Nomes das Tarifas cobradas sobre Serviços ofertados à Modalidade de Financiamentos, para pessoa Natural. (Campo Livre). p.ex.  'Avaliação de Garantia Hipotecária, Avaliação de Propriedade Rural e Parecer Técnico para Prorrogação de Operações Rurais'
+        maxLength: 250
+        pattern: \w*\W*
+        type: string
+      prices:
+        description: Lista distribuição preços tarifas de serviços
+        items:
+          $ref: ./PersonalInvoiceFinancingsFeesServicesPrices.yaml
+        maxItems: 4
+        minItems: 4
+        type: array
+      value:
+        description: Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência
+        maxLength: 12
+        pattern: ^((\d{1,9}\.\d{2}){1}|NA)$
+        type: string
+    required:
+    - name
+    - code
+    - chargingTriggerInfo
+    - value
+    - currency
+    type: object
+- names:
+  - PhoneChannelsServices
+  schema:
+    description: Traz a relação de serviços disponbilizados pelo Canal de Atendimento
+    properties:
+      addtionalInfo:
+        description: Texto livre para complementar informação relativa ao Serviço disponível, quando for selecionada a opção p preenchida a opção 'OUTROS_PRODUTOS_SERVICOS'
+        maxLength: 2000
+        pattern: \w*\W*
+        type: string
+      code:
+        description: 'Código dos Serviços efetivamente prestados pelo Canal de Atendimento:
+
+          ABRE_CONTA_DEPOSITO_OU_PRE_PAGA (Vide Enum)'
+        enum:
+        - ABRE_CONTA_DEPOSITO_OU_PRE_PAGA
+        - SAQUE_MOEDA_ESPECIE
+        - RECEBE_PAGA_QUALQUER_NATUREZA
+        - TRANSFERENCIAS_ELETRONICAS_MOVIMENTA_CONTAS_DEPOSITOS_OU_PAGTO_TITULARES_CLIENTES
+        - CONSULTA_SALDOS_EXTRATOS_CONTAS_DEPOSITOS_PAGTOS
+        - APLICA_RESGATA_INVESTIMENTOS
+        - EXECUCAO_ATIVA_PASSIVA_ORDENS_PAGTO
+        - DEPOSITO_MOEDA_ESPECIE_CHEQUE
+        - OPERA_CREDITO_OUTROS_SERVICOS_ACOMPANHA_OPERACAO
+        - CARTAO_CREDITO
+        - SEGUROS
+        - OPERA_ARRENDAMENTO_MERCANTIL
+        - ABERTURA_CONTA_PAGAMENTO_POS_PAGA
+        - COMPRA_VENDA_MOEDA_ESTRANGEIRA_ESPECIE
+        - COMPRA_VENDA_CHEQUE_CHEQUE_VIAGEM_CARGA_MOEDA_ESTRANGEIRA_CARTAO_PRE_PAGO
+        - COMPRA_VENDA_OURO
+        - OUTROS_PRODUTOS_SERVICOS
+        - CANCELAMENTO
+        - INFORMACOES
+        - RECLAMACOES
+        type: string
+      name:
+        description: 'Nome dos Serviços efetivamente prestados pelo Canal de Atendimento, discriminados na Seção 4.2 daResolução nº 35, BCB, 2020: (Vide Enum)'
+        enum:
+        - ABERTURA_CONTAS_DEPOSITOS_OU_PAGAMENTO_PRE_PAGA
+        - SAQUE_MOEDA_EM_ESPECIE
+        - RECEBIMENTOS_PAGAMENTOS_QUALQUER_NATUREZA
+        - TRANSFERENCIAS_ELETRONICAS_VISANDO_MOVIMENTACAO_CONTAS_DEPOSITOS_OU_PAGAMENTO_TITULARIDADE_CLIENTES
+        - CONSULTA_SALDOS_EXTRATOS_CONTAS_DEPOSITOS_CONTAS_PAGAMENTOS
+        - APLICACOES_RESGATES_INVESTIMENTOS
+        - EXECUCAO_ATIVA_PASSIVA_ORDENS_PAGAMENTO_SOLICITACAO_CLIENTES_USUARIOS
+        - DEPOSITOS_MOEDA_ESPECIE_CHEQUE
+        - OPERACOES_CREDITO_BEM_COMO_OUTROS_SERVICOS_PRESTADOS_ACOMPANHAMENTO_OPERACAO
+        - CARTAO_CREDITO
+        - SEGUROS
+        - OPERACOES_ARRENDAMENTO_MERCANTIL
+        - ABERTURA_CONTA_PAGAMENTO_POS_PAGA
+        - COMPRA_VENDA_MOEDA_ESTRANGEIRA_ESPECIE
+        - COMPRA_VENDA_CHEQUE_CHEQUE_VIAGEM_BEM_COMO_CARGA_MOEDA_ESTRANGEIRA_CARTAO_PRE_PAGO
+        - COMPRA_VENDA_OURO
+        - OUTROS_PRODUTOS_SERVICOS
+        - CANCELAMENTO
+        - INFORMACOES
+        - RECLAMACOES
+        type: string
+    required:
+    - name
+    - code
+    type: object
+SharedAutomatedTellerMachines:
+- names:
+  - SharedAutomatedTellerMachines
+  schema:
+    properties:
+      availability:
+        $ref: ./SharedAutomatedTellerMachinesAvailability.yaml
+      identification:
+        $ref: ./SharedAutomatedTellerMachinesIdentification.yaml
+      postalAddress:
+        $ref: ./SharedAutomatedTellerMachinesPostalAddress.yaml
+      services:
+        description: Traz a relação de serviços disponbilizados pelo Terminal de Autoatendimento Compartilhado
+        items:
+          $ref: ./SharedAutomatedTellerMachinesServices.yaml
+        maxItems: 20
+        minItems: 1
+        type: array
+    type: object
+Standards:
+- names:
+  - SharedAutomatedTellerMachinesAvailabilityStandards
+  - BankingAgentsLocationsAvailabilityStandards
+  - BranchesAvailabilityStandards
+  schema:
+    description: Relação da disponbilidade de atendimento padrão por dias da semana
+    properties:
+      closingTime:
+        description: 'Horário padrão de encerramento de atendimentodo Terminal de Autoatendimento Compartilhado.
+
+          (Uma string que representa a hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format). p.ex. ''16:00:57Z'')'
+        maxLength: 13
+        pattern: (?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z
+        type: string
+      openingTime:
+        description: 'Horário padrão de início de atendimento do Terminal de Autoatendimento Compartilhado.
+
+          (Uma string que representa a hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format). p.ex. ''10:00:57Z'')'
+        maxLength: 13
+        pattern: (?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z
+        type: string
+      weekday:
+        description: Em formato texto, seguindo o domínio apresentado, devem ser colocados os dias da semana
+        enum:
+        - DOMINGO
+        - SEGUNDA_FEIRA
+        - TERCA_FEIRA
+        - QUARTA_FEIRA
+        - QUINTA_FEIRA
+        - SEXTA_FEIRA
+        - SABADO
+        type: string
+    type: object
+TermsConditions:
+- names:
+  - BusinessAccountsTermsConditions
+  - PersonalAccountsTermsConditions
+  schema:
+    description: Objeto que reúne informações relativas a Termos e Condições para as modalidades tratadas
+    properties:
+      closingProcessInfo:
+        description: Procedimentos de encerramento para o tipo de conta tratado. Possibilidade de inscrição da URL. Endereço eletrônico de acesso ao canal. p.ex. 'https://example.com/mobile-banking'
+        maxLength: 2000
+        pattern: \w*\W*
+        type: string
+      elegibilityCriteriaInfo:
+        description: Critérios de qualificação do cliente com a finalidade de definir sua elegibilidade para a aquisição do tipo de conta. Campo Aberto
+        maxLength: 2000
+        pattern: \w*\W*
+        type: string
+      minimumBalance:
+        $ref: ./BusinessAccountsTermsConditionsMinimumBalance.yaml
+    required:
+    - elegibilityCriteriaInfo
+    - closingProcessInfo
+    type: object
+- names:
+  - BusinessCreditCardsTermsConditions
+  - PersonalCreditCardsTermsConditions
+  schema:
+    properties:
+      additionalInfo:
+        description: Campo aberto para detalhamento de taxas de juros.
+        maxLength: 500
+        pattern: \w*\W*
+        type: string
+      closingProcessInfo:
+        description: Descrição dos procedimentos para encerramento da conta de pagamento pós paga. Pode ser informada a URL referente ao endereço onde constam as condições informadas. p.ex. 'https://example.com/mobile-banking'
+        maxLength: 2000
+        pattern: \w*\W*
+        type: string
+      elegibilityCriteriaInfo:
+        description: Informação sobre as condições e critérios de elegibilidade do emissor do cartão. Pode ser informada a URL referente ao endereço onde constam as condições informadas. p.ex. 'https://example.com/mobile-banking'
+        maxLength: 2000
+        pattern: \w*\W*
+        type: string
+      minimumFeeRate:
+        description: 'Percentual para pagamento mínimo sobre o saldo devedor da fatura. p.ex. ''0,25, que representa 25%''
+
+          (representação de uma porcentagem Ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)'
+        maxLength: 4
+        pattern: '^((\d{1,9}\.\d{2}){1}|NA)$ '
+        type: string
+    required:
+    - minimumFeeRate
+    - elegibilityCriteriaInfo
+    - closingProcessInfo
+    type: object

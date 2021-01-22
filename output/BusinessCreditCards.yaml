@@ -1,0 +1,19 @@
+properties:
+  fees:
+    $ref: ./BusinessCreditCardsFees.yaml
+  identification:
+    $ref: ./BusinessCreditCardsIdentification.yaml
+  interest:
+    $ref: ./BusinessCreditCardsInterest.yaml
+  name:
+    description: 'Denominação/Identificação do nome da conta de pagamento pós-paga (cartão).Conforme CIRCULAR Nº 3.680,BCB, 2013: ''conta de pagamento pós-paga: destinada à execução de transações de pagamento que independem do aporte prévio de recursos'' p.ex. ''Cartão Universitário Bem-Vindo'''
+    maxLength: 50
+    pattern: \w*\W*
+    type: string
+  rewardsProgram:
+    $ref: ./BusinessCreditCardsRewardsProgram.yaml
+  termsConditions:
+    $ref: ./BusinessCreditCardsTermsConditions.yaml
+required:
+- name
+type: object

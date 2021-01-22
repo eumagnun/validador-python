@@ -1,0 +1,16 @@
+description: Objeto que reúne informações de tarifas de serviços
+properties:
+  otherServices:
+    description: Lista das Tarifas cobradas sobre outros Serviços, que não prioritários
+    items:
+      $ref: ./PersonalAccountsFeesOtherServices.yaml
+    minItems: 1
+    type: array
+  priorityServices:
+    description: Lista das Tarifas cobradas sobre Serviços Prioritários
+    items:
+      $ref: ./PersonalAccountsFeesPriorityServices.yaml
+    maxItems: 40
+    minItems: 1
+    type: array
+type: object

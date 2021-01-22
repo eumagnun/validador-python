@@ -1,0 +1,10 @@
+description: Objeto que reúne informações de tarifas de serviços
+properties:
+  services:
+    description: Lista das Tarifas cobradas sobre Serviço relacionadas a Modalidade de Pagamento Pós-Pagas
+    items:
+      $ref: ./BusinessCreditCardsFeesServices.yaml
+    maxItems: 9
+    minItems: 1
+    type: array
+type: object

@@ -1,0 +1,28 @@
+description: Lista de telefones do Canal de Atendimento
+properties:
+  additionalInfo:
+    description: "Mensagem complementar necessária para o agrupamento da identificação do telefone. Exemplos relativos ao prenchimento do agrupmento telefônico: \nDDI '55'; DDD '11', '40044828, 'Para clientes no exterior'\nDDI ' ', DDD ' ', 40044828', \"Para regiões metropolitanas'\nDDI ' ', DDD ' ', 40044828', \"Para demais localidades'"
+    maxLength: 300
+    pattern: \w*\W*
+    type: string
+  areaCode:
+    description: Número de DDD (Discagem Direta à Distância) para  telefone de acesso ao Canal - se houver. p.ex. '19'
+    maxLength: 2
+    pattern: ^\d{2}$|^NA$
+    type: string
+  countryCallingCode:
+    description: Número de DDI (Discagem Direta Internacional) para  telefone de acesso ao Canal - se houver. p.ex. '55'
+    maxLength: 2
+    pattern: ^\d{2}$|^NA$
+    type: string
+  number:
+    description: Número de telefone de acesso ao canal. p.ex:' 4004-4828', '99878-5342', '0800-778-7788'
+    maxLength: 13
+    pattern: ^([0-9]{8,11})$|^NA$
+    type: string
+required:
+- countryCallingCode
+- areaCode
+- number
+- additionalInfo
+type: object

@@ -1,0 +1,10 @@
+description: Objeto que reúne informações de tarifas de serviços
+properties:
+  services:
+    description: Lista das Tarifas cobradas sobre Serviços Prioritários
+    items:
+      $ref: ./BusinessUnarrangedAccountOverdraftFeesServices.yaml
+    maxItems: 31
+    minItems: 1
+    type: array
+type: object

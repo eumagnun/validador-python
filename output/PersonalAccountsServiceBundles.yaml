@@ -1,0 +1,27 @@
+description: Lista dos Pacotes de serviços
+properties:
+  maximum:
+    $ref: ./PersonalAccountsServiceBundlesMaximum.yaml
+  minimum:
+    $ref: ./PersonalAccountsServiceBundlesMinimum.yaml
+  name:
+    description: Nome do Pacote de Serviços disponibilizado  pela instituição
+    maxLength: 250
+    pattern: \w*\W*
+    type: string
+  prices:
+    description: Lista distribuição preços tarifas de serviços
+    items:
+      $ref: ./PersonalAccountsServiceBundlesPrices.yaml
+    maxItems: 4
+    minItems: 4
+    type: array
+  services:
+    description: Lista dos serviços que compõe o pacote de serviços
+    items:
+      $ref: ./PersonalAccountsServiceBundlesServices.yaml
+    minItems: 1
+    type: array
+required:
+- name
+type: object

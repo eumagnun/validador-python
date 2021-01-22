@@ -1,0 +1,16 @@
+properties:
+  currency:
+    description: Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217. p.ex.'BRL'
+    enum:
+    - moeda (ISO-4217)
+    maxLength: 3
+    type: string
+  value:
+    description: Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência
+    maxLength: 12
+    pattern: ^((\d{1,9}\.\d{2}){1}|NA)$  
+    type: string
+required:
+- value
+- currency
+type: object

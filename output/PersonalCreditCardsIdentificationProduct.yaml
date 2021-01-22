@@ -1,0 +1,36 @@
+properties:
+  additionalInfo:
+    description: Informações complementares se tipo de Cartão 'OUTROS'
+    maxLength: 50
+    pattern: \w*\W*
+    type: string
+  type:
+    description: 'Categoria atribuída a um cartão de pagamento, sob uma certa denominação, que lhe agrega um conjunto de vantagens, diferenciando-o de acordo com o perfil do portador. p.ex. ''Classic Nacional'', ''Classic Internacional''
+
+      Essa categoria é definida pelo BACEN e está contida no documento de nome ''Elaboração e Remessa de Informações Relativas aos Cartões de Pagamento Emissores'''
+    enum:
+    - CLASSIC_NACIONAL
+    - CLASSIC_INTERNACIONAL
+    - GOLD
+    - PLATINUM
+    - INFINITE
+    - ELECTRON
+    - STANDARD_NACIONAL
+    - STANDARD_INTERNACIONAL
+    - ELETRONIC
+    - BLACK
+    - REDESHOP
+    - MAESTRO_MASTERCARD_MAESTRO
+    - GREEN
+    - BLUE
+    - BLUEBOX
+    - PROFISSIONAL_LIBERAL
+    - CHEQUE_ELETRONICO
+    - CORPORATIVO
+    - EMPRESARIAL
+    - COMPRAS
+    - OUTROS
+    type: string
+required:
+- type
+type: object

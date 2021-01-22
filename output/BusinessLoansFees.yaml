@@ -1,0 +1,9 @@
+description: Objeto que reúne informações de tarifas de serviços
+properties:
+  services:
+    description: Lista das Tarifas cobradas sobre Serviços
+    items:
+      $ref: ./BusinessLoansFeesServices.yaml
+    minItems: 1
+    type: array
+type: object

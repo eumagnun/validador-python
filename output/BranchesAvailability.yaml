@@ -1,0 +1,22 @@
+properties:
+  exception:
+    description: Em campo texto devem ser registradas todas as Exceções para o não atendimento. p.ex. 'Exceto feriados municipais, nacionais e estaduais'
+    maxLength: 2000
+    pattern: \w*\W*
+    type: string
+  isPublicAccessAllowed:
+    description: Indica se a instalação da Dependência  tem acesso restrito a clientes, por exemplo. p.ex. 'false' (restrito)
+    enum:
+    - 'true'
+    - 'false'
+    type: string
+  standards:
+    description: Lista disponibilidade padrão da depêndencia por dias da semana
+    items:
+      $ref: ./BranchesAvailabilityStandards.yaml
+    maxItems: 7
+    minItems: 1
+    type: array
+required:
+- exception
+type: object

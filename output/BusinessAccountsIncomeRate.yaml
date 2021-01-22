@@ -1,0 +1,12 @@
+properties:
+  prepaidPaymentAccount:
+    description: Campo Livre. Deve explicitar o Percentual em favor do titular da conta de pagamento pré-paga. P.ex. '40% de rendimento a.m.'
+    maxLength: 2000
+    pattern: \w*\W*
+    type: string
+  savingAccount:
+    description: Descrição da Remuneração especificamente para Conta de Poupança. Deve ser preenchido com a determinação legal vigente. p.ex. '70% da Taxa Selic (6,5%) = 4,55%, que é o atual rendimento anual da poupança. O rendimento mensal é de 0,3715'
+    maxLength: 2000
+    pattern: \w*\W*
+    type: string
+type: object

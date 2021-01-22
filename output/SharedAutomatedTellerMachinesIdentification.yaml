@@ -1,0 +1,7 @@
+properties:
+  ownerName:
+    description: Nome do proprietário do terminal de Autoatendimento Compartilhado
+    maxLength: 100
+    pattern: \w*\W*
+    type: string
+type: object

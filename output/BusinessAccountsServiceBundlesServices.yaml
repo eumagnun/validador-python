@@ -1,0 +1,28 @@
+description: Lista dos serviços que compõem o Pacote de Serviços
+properties:
+  chargingTriggerInfo:
+    description: Fatos geradores de cobrança que incidem sobre serviço que compõe o Pacote de Serviços
+    maxLength: 2000
+    pattern: \w*\W*
+    type: string
+  code:
+    description: Código que identifica o Serviço que compõe o Pacote de Serviços
+    maxLength: 100
+    pattern: \w*\W*
+    type: string
+  eventLimitQuantity:
+    description: 'Segundo Resolução  4196, BCB, de 2013: Quantidade de eventos previstos no Pacote de Serviços (Número de eventos incluídos no mês) p.ex.''2''. No caso de quantidade ilimitada, reportar 999999'
+    maxLength: 6
+    pattern: ^(\d{1,6}){1}$
+    type: string
+  freeEventQuantity:
+    description: 'Segundo Resolução  4196, BCB, de 2013: Quantidade de eventos previstos no Pacote de Serviços com isenção de Tarifa.p.ex.''1''  No caso de quantidade ilimitada, reportar 999999'
+    maxLength: 6
+    pattern: ^(\d{1,6}){1}$
+    type: string
+required:
+- code
+- chargingTriggerInfo
+- eventLimitQuantity
+- freeEventQuantity
+type: object

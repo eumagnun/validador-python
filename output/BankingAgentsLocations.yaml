@@ -1,0 +1,11 @@
+description: Relação de informações referentes as localizações de um Correspondente bancário
+properties:
+  availability:
+    $ref: ./BankingAgentsLocationsAvailability.yaml
+  phones:
+    items:
+      $ref: ./BankingAgentsLocationsPhones.yaml
+    type: array
+  postalAddress:
+    $ref: ./BankingAgentsLocationsPostalAddress.yaml
+type: object

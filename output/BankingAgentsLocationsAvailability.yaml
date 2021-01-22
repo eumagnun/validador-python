@@ -1,0 +1,20 @@
+properties:
+  exception:
+    description: Em campo texto devem ser registradas todas as Exceções para o não atendimento. p.ex. 'Exceto feriados municipais, nacionais e estaduais'
+    maxLength: 2000
+    pattern: \w*\W*
+    type: string
+  isPublicAccessAllowed:
+    description: Indica se a instalação do Correspondente Bancário tem acesso restrito a clientes, por exemplo. p.ex. 'FALSO' (restrito)
+    enum:
+    - 'true'
+    - 'false'
+    type: string
+  standards:
+    description: Relação da disponbilidade de atendimento
+    items:
+      $ref: ./BankingAgentsLocationsAvailabilityStandards.yaml
+    maxItems: 7
+    minItems: 1
+    type: array
+type: object

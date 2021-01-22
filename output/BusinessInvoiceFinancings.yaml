@@ -1,0 +1,56 @@
+properties:
+  fees:
+    $ref: ./BusinessInvoiceFinancingsFees.yaml
+  interestRates:
+    description: Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequência das taxas de juros remuneratórios da Modalidade de crédito
+    items:
+      $ref: ./BusinessInvoiceFinancingsInterestRates.yaml
+    minItems: 1
+    type: array
+  requiredWarranties:
+    description: "Relação de garantias exigidas, segundo documento 3040 do Bacen: \n-cessão de direitos creditórios: o cedente transfere ao credor/cessionário a titularidade de direitos creditórios, até a liquidação da dívida. O credor/cessionário passa a recebê-los diretamente dos devedores e credita o produto da operação para o cedente na operação que originou a cessão, até a sua liquidação \n-caução: garantia instituída sobre créditos do garantidor \n-penhor: direito real que consiste na tradição de uma coisa móvel ou mobilizável, suscetível de alienação, realizada pelo devedor ou por terceiro ao credor, a fim de garantir o pagamento do débito \n-alienação fiduciária: transferência ao credor, ou fiduciário, da propriedade do bem \n-hipoteca: direito real de garantia que afeta um bem imóvel para o cumprimento da obrigação \n-operações garantidas pelo governo: nas instâncias federal, estadual ou municipal\n-outras garantias não fidejussórias: as garantias reais não descritas como: cessão de direitos creditórios, caução, penhor, alienação fiduciária, hipoteca ou operação garantida pelo governo \n-seguros e assemelhados: os seguros (e assemelhados) contratados para garantir o pagamento da operação em circunstâncias adversas\n-garantia fidejussória: baseada na fidelidade do garantidor em cumprir as obrigações, caso o devedor não o faça\n-bens arrendados: bem objeto do arrendamento financeiro\n-garantias internacionais: declarar se a garantia é mitigadora ou não, observados os critérios definidos pela Circular 3.644, de 4 de março de 2013 \n-operações garantidas por outras entidade: declarar as garantias prestadas pelas entidades descritas no item 3. Informações de Garantias (i) do documento 3040 - Bacen \n-acordos de compensação: operações que sejam abrangidas por acordos para a compensação e liquidação de obrigações no âmbito do SFN, nos termos da Resolução 3.263, de 24 de fevereiro de 2005\n-não aplicável"
+    enum:
+    - CESSAO_DIREITOS_CREDITORIOS
+    - CAUCAO
+    - PENHOR
+    - ALIENACAO_FIDUCIARIA
+    - HIPOTECA
+    - OPERACOES_GARANTIDAS_PELO_GOVERNO
+    - OUTRAS_GARANTIAS_NAO_FIDEJUSSORIAS
+    - SEGUROS_ASSEMELHADOS
+    - GARANTIA_FIDEJUSSORIA
+    - BENS_ARRENDADOS
+    - GARANTIAS_INTERNACIONAIS
+    - OPERACOES_GARANTIDAS_OUTRAS_ENTIDADES
+    - ACORDOS_COMPENSACAO
+    - NAO_APLICAVEL
+    type: string
+  termsConditions:
+    description: Campo aberto para informar as condições contratuais relativas à Modalidade de Financiamentos para pessoa jurídica informada. Pode ser informada a URL referente ao endereço onde constam as condições informadas. Endereço eletrônico de acesso ao canal.
+    maxLength: 2000
+    pattern: \w*\W*
+    type: string
+  type:
+    description: 'Modalidades de Direitos Creditórios Descontados ofertados, conforme Circular 4015-Bacen. Direito creditório descontado é a antecipação de créditos relativos por ex. ao: desconto de duplicatas, desconto de cheques, antecipação de fatura de cartão de crédito
+
+      desconto de duplicatas: operações de crédito para adiantamento de recursos com base em fluxo de caixa futuro vinculado a duplicatas mercantis
+
+      desconto de cheques: operações de crédito para adiantamento de recursos com base em fluxo de caixa futuro vinculado a cheques custodiados
+
+      antecipação de fatura de cartão de crédito: operações de crédito para adiantamento de recursos  com base em fluxo de caixa futuro vinculado a direitos creditórios sob a forma de faturas de cartão de crédito
+
+      outros direitos creditórios descontados: operação  de crédito que permite antecipar o valor da venda a prazo dos produtos ou serviços mediante desconto de nota promissória
+
+      outros títulos descontados: demais títulos descontados, regulamentação própria'
+    enum:
+    - DESCONTO_DUPLICATAS
+    - DESCONTO_CHEQUES
+    - ANTECIPACAO_FATURA_CARTAO_CREDITO
+    - OUTROS_DIREITOS_CREDITORIOS_DESCONTADOS
+    - OUTROS_TITULOS_DESCONTADOS
+    type: string
+required:
+- type
+- requiredWarranties
+- termsConditions
+type: object

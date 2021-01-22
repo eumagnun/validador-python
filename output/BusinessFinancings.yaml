@@ -1,0 +1,50 @@
+properties:
+  fees:
+    $ref: ./BusinessFinancingsFees.yaml
+  interestRates:
+    description: Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequências das taxas de juros remuneratórios da Modalidade de crédito
+    items:
+      $ref: ./BusinessFinancingsInterestRates.yaml
+    minItems: 1
+    type: array
+  requiredWarranties:
+    description: "Listas das garantias exigidas, segundo documento 3040 do Bacen:  \n-cessão de direitos creditórios: o cedente transfere ao credor/cessionário a titularidade de direitos creditórios, até a liquidação da dívida. O credor/cessionário passa a recebê-los diretamente dos devedores e credita o produto da operação para o cedente na operação que originou a cessão, até a sua liquidação \n-caução: garantia instituída sobre créditos do garantidor \n-penhor: direito real que consiste na tradição de uma coisa móvel ou mobilizável, suscetível de alienação, realizada pelo devedor ou por terceiro ao credor, a fim de garantir o pagamento do débito \n-alienação fiduciária: transferência ao credor, ou fiduciário, da propriedade do bem \n-hipoteca: direito real de garantia que afeta um bem imóvel para o cumprimento da obrigação \n-operações garantidas pelo governo: nas instâncias federal, estadual ou municipal\n-outras garantias não fidejussórias: as garantias reais não descritas como: cessão de direitos creditórios, caução, penhor, alienação fiduciária, hipoteca ou operação garantida pelo governo \n-seguros e assemelhados: os seguros (e assemelhados) contratados para garantir o pagamento da operação em circunstâncias adversas\n-garantia fidejussória: baseada na fidelidade do garantidor em cumprir as obrigações, caso o devedor não o faça\n-bens arrendados: bem objeto do arrendamento financeiro\n-garantias internacionais: declarar se a garantia é mitigadora ou não, observados os critérios definidos pela Circular 3.644, de 4 de março de 2013 \n-operações garantidas por outras entidade: declarar as garantias prestadas pelas entidades descritas no item 3. Informações de Garantias (i) do documento 3040 - Bacen \n-acordos de compensação: operações que sejam abrangidas por acordos para a compensação e liquidação de obrigações no âmbito do SFN, nos termos da Resolução 3.263, de 24 de fevereiro de 2005\n-não aplicável"
+    enum:
+    - CESSAO_DIREITOS_CREDITORIOS
+    - CAUCAO
+    - PENHOR
+    - ALIENACAO_FIDUCIARIA
+    - HIPOTECA
+    - OPERACOES_GARANTIDAS_PELO_GOVERNO
+    - OUTRAS_GARANTIAS_NAO_FIDEJUSSORIAS
+    - SEGUROS_ASSEMELHADOS
+    - GARANTIA_FIDEJUSSORIA
+    - BENS_ARRENDADOS
+    - GARANTIAS_INTERNACIONAIS
+    - OPERACOES_GARANTIDAS_OUTRAS_ENTIDADES
+    - ACORDOS_COMPENSACAO
+    - NAO_APLICAVEL
+    type: string
+  termsConditions:
+    description: Campo aberto para informar as condições contratuais relativas à Modalidade de Financiamentos para pessoa jurídica informada. Pode ser informada a URL referente ao endereço onde constam as condições informadas. Endereço eletrônico de acesso ao canal.
+    maxLength: 2000
+    pattern: \w*\W*
+    type: string
+  type:
+    description: "Modalidades de financiamentos ofertadas para pessoas jurídicas, conforme Circular 4015-Bacen. Segundo cartilha do Bacen: Financiamento é um contrato entre o cliente e uma instituição financeira, mas com, destinação específica como para a aquisição de veículo ou de bem imóvel, que funcionam como garantia para o crédito concedido. p. ex. financiamento imobiliário e de veículos. São eles segundo descrições obtidas junto ao Documento 3040 do Bacen:\nfinanciamento-aquisição de bens – veículos automotores - Financiamentos a pessoas jurídicas vinculadas à aquisição de bens veículos automotores, que tenham o bem financiado alienado fiduciariamente como garantia da operação\nfinanciamento-aquisição de bens – outros bens - destinados a financiar a aquisição de bens, serviços, máquinas e equipamentos, exceto veículos automotores\nfinanciamento-microcrédito - operação de crédito realizada para financiamento de atividades produtivas de pessoas naturais ou jurídicas, organizadas de forma individual ou coletiva, com renda ou receita bruta anual de até R$200.000,00 (duzentos mil reais) \nfinanciamento rural-custeio - financiamentos concedidos a produtores rurais para custeio, tanto agrícolas quanto pecuários (destina-se a cobrir os gastos normais dos ciclos produtivos, como aquisição de insumo);\nfinanciamento rural-investimento - financiamentos concedidos a produtores rurais para investimento, tanto agrícolas quanto pecuários (aplicações em bens ou serviços que serão utilizados por vários ciclos produtivos, como compra de máquinas e equipamentos, construção e reforma de benfeitorias); \nfinanciamento rural-comercialização - financiamentos concedidos a produtores rurais para comercialização, tanto agrícolas quanto pecuários (destina-se às despesas posteriores à produção, como armazenagem, ou conversão em espécie dos títulos de venda a prazo da produção);\nfinanciamento rural-industrialização - financiamentos concedidos a produtores rurais para industrialização, tanto agrícolas quanto pecuários (destina-se à industrialização de produtos agropecuários por produtores ou suas cooperativas);\nfinanciamento imobiliário-Sistema Financeiro da Habitação (SFH) - financiamento para aquisição ou construção de unidades habitacionais enquadradas no Sistema Financeiro de Habitação - SFH. O SFH foi criado pela Lei 4.380/64 e tem como característica a regulamentação das condições de financiamento imobiliário, por exemplo, taxa de juros, quota, prazos. O Governo Federal pode intervir em qualquer um dos aspectos do financiamento. Nesse sistema estão incluídas as operações contratadas com recursos do SBPE e do FGTS, inclusive o PMCMV (Programa Minha Casa, Minha Vida). As operações com recursos do FGTS observam, ainda, regulamentação própria. \nfinanciamento imobiliário-Sistema Financeiro da Habitação (SFI) - O SFI não possui regulamentação das condições de financiamento, sendo estas definidas pelo Agentes Financeiros"
+    enum:
+    - FINANCIAMENTO_AQUISICAO_BENS_VEICULOS_AUTOMOTORES
+    - FINANCIAMENTO_AQUISICAO_BENS_OUTROS_BENS
+    - FINANCIAMENTO-MICROCREDITO
+    - FINANCIAMENTO_RURAL_CUSTEIO
+    - FINANCIAMENTO_RURAL_INVESTIMENTO
+    - FINANCIAMENTO_RURAL_COMERCIALIZACAO
+    - FINANCIAMENTO_RURAL_INDUSTRIALIZACAO
+    - FINANCIAMENTO_IMOBILIARIO_SISTEMA_FINANCEIRO_HABITACAO-SFH
+    - FINANCIAMENTO_IMOBILIARIO_SISTEMA_FINANCEIRO_HABITACAO-SFI
+    type: string
+required:
+- type
+- requiredWarranties
+- termsConditions
+type: object

@@ -1,0 +1,15 @@
+properties:
+  availability:
+    $ref: ./SharedAutomatedTellerMachinesAvailability.yaml
+  identification:
+    $ref: ./SharedAutomatedTellerMachinesIdentification.yaml
+  postalAddress:
+    $ref: ./SharedAutomatedTellerMachinesPostalAddress.yaml
+  services:
+    description: Traz a relação de serviços disponbilizados pelo Terminal de Autoatendimento Compartilhado
+    items:
+      $ref: ./SharedAutomatedTellerMachinesServices.yaml
+    maxItems: 20
+    minItems: 1
+    type: array
+type: object

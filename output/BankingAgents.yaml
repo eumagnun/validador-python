@@ -1,0 +1,17 @@
+properties:
+  identification:
+    $ref: ./BankingAgentsIdentification.yaml
+  locations:
+    description: Relação de informações referentes as localizações de um Correspondente bancário
+    items:
+      $ref: ./BankingAgentsLocations.yaml
+    minItems: 1
+    type: array
+  services:
+    description: Traz a relação de serviços disponbilizados pelo Correspondente Bancário
+    items:
+      $ref: ./BankingAgentsServices.yaml
+    maxItems: 20
+    minItems: 1
+    type: array
+type: object

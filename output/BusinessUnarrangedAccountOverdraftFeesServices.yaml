@@ -1,0 +1,32 @@
+description: Lista das Tarifas cobradas sobre Serviços Prioritários
+properties:
+  chargingTriggerInfo:
+    description: Fato gerador de cobrança que incide sobre a Modalidade de Adiantamento a depositante informada, para pessoa natural. Conforme Resolução CMN nº 3.919, de 2010.p.ex.'Levantamento de informações e avaliação de viabilidade e de riscos para a concessão de crédito em caráter emergencial para cobertura de saldo devedor em conta de depósitos à vista e de excesso sobre o limite previamente pactuado de cheque especial, cobrada no máximo uma vez nos últimos trinta dias'
+    maxLength: 2000
+    type: string
+  code:
+    description: Sigla de identificação do serviço relacionado à Modalidade de Adiantamento a depositante, para pessoa natural. Conforme Resolução CMN nº 3.919, de 2010. p.ex. 'ADIANT_DEPOSITANTE'
+    enum:
+    - ADIANT_DEPOSITANTE
+    type: string
+  maximum:
+    $ref: ./BusinessUnarrangedAccountOverdraftFeesServicesMaximum.yaml
+  minimum:
+    $ref: ./BusinessUnarrangedAccountOverdraftFeesServicesMinimum.yaml
+  name:
+    description: Nome da Tarifa cobrada sobre Serviço que incide sobre Adiantamento a depositante. Conforme Resolução CMN nº 3.919, de 2010. p.ex. 'CONCESSAO_ADIANTAMENTO_DEPOSITANTE'
+    enum:
+    - CONCESSAO_ADIANTAMENTO_DEPOSITANTE
+    type: string
+  prices:
+    description: lista das faixas dos  valores de tarfas cobradas
+    items:
+      $ref: ./BusinessUnarrangedAccountOverdraftFeesServicesPrices.yaml
+    maxItems: 4
+    minItems: 4
+    type: array
+required:
+- name
+- code
+- chargingTriggerInfo
+type: object

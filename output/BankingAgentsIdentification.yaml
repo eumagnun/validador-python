@@ -1,0 +1,36 @@
+properties:
+  cnpjNumber:
+    description: 'Número completo do CNPJ do Correspondente Bancário - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica.
+
+      Deve-se ter apenas os números do CNPJ, sem máscara'
+    enum:
+    - Números de 0 a 9
+    maxLength: 14
+    pattern: ^(\d{14})$|^NA$
+    type: string
+  corporationName:
+    description: 'Nome do Correspondente Bancário no pais. Segundo Glossário do Bacen: Correspondentes no pais são Empresas, integrantes ou não do Sistema Financeiro Nacional, contratadas por instituições financeiras e demais instituições autorizadas a funcionar pelo Banco Central do Brasil para a prestação de serviços de atendimento aos clientes e usuários dessas instituições. Os correspondentes mais conhecidos são as lotéricas e o banco postal. p.ex. ''Empresa Correspondente S.A.'''
+    maxLength: 100
+    pattern: \w*\W*
+    type: string
+  groupName:
+    description: 'Nome do conglomerado ao qual pertence o Correspondente Bancário, p.ex.:
+
+      ''Companhia Brasileira de Distribuição''
+
+      ''Empresa Brasileira de Correios e Telégrafos - ECT''
+
+      ''Grupo Pão de Açúcar'''
+    maxLength: 100
+    pattern: \w*\W*
+    type: string
+  isUnderestablishment:
+    description: "Indicador do Correspondente Bancário ser um Substabelecimento (são empresas  que foram contratadas por um correspondente bancário para prestar  serviços.       A empresa substabelecida é tratada como um correspondente do banco e tem praticamente os mesmos direitos e obrigações que possui o correspondente direto)\n true\n false"
+    enum:
+    - 'true'
+    - 'false'
+    type: string
+required:
+- corporationName
+- cnpjNumber
+type: object

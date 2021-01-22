@@ -1,0 +1,23 @@
+properties:
+  availability:
+    $ref: ./BranchesAvailability.yaml
+  identification:
+    $ref: ./BranchesIdentification.yaml
+  phones:
+    description: Lista de telefones da Dependência
+    items:
+      $ref: ./BranchesPhones.yaml
+    minItems: 1
+    type: array
+  postalAddress:
+    $ref: ./BranchesPostalAddress.yaml
+  service:
+    $ref: ./BranchesService.yaml
+  services:
+    description: Traz a relação de serviços disponbilizados pelo Canal de Atendimento
+    items:
+      $ref: ./BranchesServices.yaml
+    maxItems: 20
+    minItems: 1
+    type: array
+type: object

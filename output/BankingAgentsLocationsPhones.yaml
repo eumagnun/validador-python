@@ -1,0 +1,25 @@
+properties:
+  areaCode:
+    description: Número de DDD (Discagem Direta à Distância) do telefone da dependência - se houver. p.ex. '19'
+    maxLength: 2
+    pattern: ^\d{2}$
+    type: string
+  countryCallingCode:
+    description: Número de DDI (Discagem Direta Internacional) para  telefone de acesso ao Canal - se houver. p.ex. '55'
+    maxLength: 4
+    pattern: ^\d{4}$
+    type: string
+  number:
+    description: Número de telefone da dependência - se houver
+    maxLength: 11
+    pattern: ^([0-9]{8,11})$
+    type: string
+  type:
+    description: Identificação do Tipo de telefone da dependência. p.ex.FIXO, MOVEL
+    enum:
+    - FIXO
+    - MOVEL
+    type: string
+required:
+- type
+type: object

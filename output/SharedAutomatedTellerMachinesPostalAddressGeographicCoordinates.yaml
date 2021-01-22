@@ -1,0 +1,12 @@
+properties:
+  latitude:
+    description: Informação da Latitude referente a geolocalização informada. Entre -90 e 90.p.ex. '-90.8365180'
+    pattern: ^-?\d{1,2}\.\d{1,9}$
+    type: string
+  longitude:
+    description: 'Informação da Longitude referente a geolocalização informada. Entre -180 e 180.p.ex
+
+      ''-180.836519.'''
+    pattern: ^-?\d{1,2}\.\d{1,8}$
+    type: string
+type: object

@@ -1,0 +1,15 @@
+properties:
+  hasRewardProgram:
+    description: "Indicador da existência de programa de fidelidade/recompensa associado à conta de pagamento                     pós-paga (cartão)\n true\nfalse"
+    enum:
+    - 'true'
+    - 'false'
+    type: string
+  rewardProgramInfo:
+    description: Informações de Termos e condições do programa de fidelidade/recompensa. Pode ser informada a URL referente ao endereço onde constam as condições informadas. URLs são limitadas a 2048 caracteres mas, para o contexto do Sistema Financeiro aberto, será adotado a metade deste tamanho. p.ex. 'https://example.com/mobile-banking'
+    maxLength: 2000
+    pattern: \w*\W*
+    type: string
+required:
+- hasRewardProgram
+type: object
